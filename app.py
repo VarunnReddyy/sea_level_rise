@@ -452,7 +452,7 @@ Overall, PCA is an essential tool in the field of data science, offering a way t
 
     # Collapsible section for variance explained
     with st.expander("Variance Explained by PCA Components"):
-        st.write(f"Variance explained by 2 components: 92.92%
+        st.write("Variance explained by 2 components: 92.92%
 The first two principal components explain 92.92% of the variance in the dataset. This means that by projecting the data onto these two components, we retain nearly 93% of the original information, allowing us to reduce the dimensionality of the data from the original features to just two components without losing much important information. This is a strong indication that the majority of the variability in the data can be captured with just two dimensions.
 
 Variance explained by 3 components: 97.50%
