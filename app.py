@@ -454,8 +454,8 @@ elif section=="PCA":
 
     # Collapsible section for visualizations
     with st.expander("PCA Visualizations"):
-        st.image('/mnt/data/2d_pca_visualization.png', caption='2D PCA - First Two Principal Components')
-        st.image('/mnt/data/3d_pca_visualization.png', caption='3D PCA - First Three Principal Components')
+        st.image('2d_pca_visualization', caption='2D PCA - First Two Principal Components')
+        st.image('3d_pca_visualization', caption='3D PCA - First Three Principal Components')
 
 elif section == "Models Implemented":
     # st.title("Models Implemented")
