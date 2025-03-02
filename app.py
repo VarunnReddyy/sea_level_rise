@@ -416,29 +416,30 @@ if section == "Data Visualizations":
     ax9.set_ylabel('')
     plt.tight_layout()
     st.pyplot(fig9)
-elif section=="PCA":
+elif section == "PCA":
     st.title("Principal Component Analysis (PCA)")
     
     # PCA Description
     st.header("What is PCA?")
     st.write("""
-Principal Component Analysis (PCA) is a powerful statistical technique primarily used to reduce the dimensionality of large datasets, making them easier to analyze and interpret, while retaining most of the variation (information). PCA does this by transforming the original dataset into a new set of orthogonal variables called principal components. These components are ordered by the amount of variance they capture, with the first principal component explaining the largest possible variance in the data.
+    Principal Component Analysis (PCA) is a powerful statistical technique primarily used to reduce the dimensionality of large datasets, making them easier to analyze and interpret, while retaining most of the variation (information). PCA does this by transforming the original dataset into a new set of orthogonal variables called principal components. These components are ordered by the amount of variance they capture, with the first principal component explaining the largest possible variance in the data.
 
-PCA works by calculating the covariance matrix of the original data to understand the relationships between variables. Then, eigenvectors and eigenvalues are computed from the covariance matrix. The eigenvectors represent the new axes (principal components), and the eigenvalues correspond to the amount of variance captured by each principal component. By projecting the data onto these principal components, we effectively reduce the dataset’s complexity.
+    PCA works by calculating the covariance matrix of the original data to understand the relationships between variables. Then, eigenvectors and eigenvalues are computed from the covariance matrix. The eigenvectors represent the new axes (principal components), and the eigenvalues correspond to the amount of variance captured by each principal component. By projecting the data onto these principal components, we effectively reduce the dataset’s complexity.
 
-The key advantage of PCA is that it allows us to:
+    The key advantage of PCA is that it allows us to:
 
-Simplify the Data: By reducing the number of dimensions (features), PCA makes it easier to visualize, interpret, and process the data without losing significant information.
-Enhance Visualization: PCA allows us to plot high-dimensional data in two or three dimensions, which can be particularly useful for exploratory data analysis.
-Noise Reduction: By focusing on the components with the highest variance, PCA helps in eliminating noise (less informative variations) from the data.
-Feature Selection: It can be used to identify and retain the most important features, removing redundant or less informative variables.
-PCA is widely used in a variety of fields including:
+    Simplify the Data: By reducing the number of dimensions (features), PCA makes it easier to visualize, interpret, and process the data without losing significant information.
+    Enhance Visualization: PCA allows us to plot high-dimensional data in two or three dimensions, which can be particularly useful for exploratory data analysis.
+    Noise Reduction: By focusing on the components with the highest variance, PCA helps in eliminating noise (less informative variations) from the data.
+    Feature Selection: It can be used to identify and retain the most important features, removing redundant or less informative variables.
+    PCA is widely used in a variety of fields including:
 
-Machine Learning: It is used for dimensionality reduction before applying machine learning algorithms, which helps improve computational efficiency and model accuracy.
-Image Processing: PCA helps in reducing the number of pixels required to represent images, often used in facial recognition and image compression.
-Finance: PCA is used to identify patterns in financial data and to reduce risk by identifying key factors that drive market movements.
-Biology and Genetics: PCA is used to reduce the dimensionality of genomic data, making it easier to analyze and interpret complex genetic information.
-Overall, PCA is an essential tool in the field of data science, offering a way to process complex datasets, extract meaningful insights, and improve machine learning model performance.    """)
+    Machine Learning: It is used for dimensionality reduction before applying machine learning algorithms, which helps improve computational efficiency and model accuracy.
+    Image Processing: PCA helps in reducing the number of pixels required to represent images, often used in facial recognition and image compression.
+    Finance: PCA is used to identify patterns in financial data and to reduce risk by identifying key factors that drive market movements.
+    Biology and Genetics: PCA is used to reduce the dimensionality of genomic data, making it easier to analyze and interpret complex genetic information.
+    Overall, PCA is an essential tool in the field of data science, offering a way to process complex datasets, extract meaningful insights, and improve machine learning model performance.
+    """)
 
     st.header("Steps Involved in PCA")
     st.write("""
@@ -452,40 +453,47 @@ Overall, PCA is an essential tool in the field of data science, offering a way t
 
     # Collapsible section for variance explained
     with st.expander("Variance Explained by PCA Components"):
-        st.write("Variance explained by 2 components: 92.92%
-The first two principal components explain 92.92% of the variance in the dataset. This means that by projecting the data onto these two components, we retain nearly 93% of the original information, allowing us to reduce the dimensionality of the data from the original features to just two components without losing much important information. This is a strong indication that the majority of the variability in the data can be captured with just two dimensions.
+        st.write("""
+        Variance explained by 2 components: 92.92%
+        The first two principal components explain 92.92% of the variance in the dataset. This means that by projecting the data onto these two components, we retain nearly 93% of the original information, allowing us to reduce the dimensionality of the data from the original features to just two components without losing much important information. This is a strong indication that the majority of the variability in the data can be captured with just two dimensions.
 
-Variance explained by 3 components: 97.50%
-When we include the third principal component, the variance explained rises to 97.50%. This means that the first three components together explain almost 98% of the variance in the data. With these three components, we are able to retain almost all the important information from the original high-dimensional dataset, further reducing the complexity while maintaining most of the data’s variability.")
-        # st.write(f"Variance explained by 3 components: **97.50%**")
+        Variance explained by 3 components: 97.50%
+        When we include the third principal component, the variance explained rises to 97.50%. This means that the first three components together explain almost 98% of the variance in the data. With these three components, we are able to retain almost all the important information from the original high-dimensional dataset, further reducing the complexity while maintaining most of the data’s variability.
+        """)
 
     # Collapsible section for components needed for 95% variance retention
     with st.expander("Number of Components for 95% Variance Retention"):
-        # st.write("To retain at least 95% of the variance, we need:")
-        st.write("2 components for 2D PCA:
-To retain at least 95% of the variance in the data using 2D PCA, we only need the first two principal components. These two components together explain 92.92% of the variance, which is just shy of 95%. However, even though the exact threshold is not reached with two components alone, the small gap means that the first two components still capture most of the important information, and they are typically sufficient for most practical purposes.
+        st.write("""
+        2 components for 2D PCA:
+        To retain at least 95% of the variance in the data using 2D PCA, we only need the first two principal components. These two components together explain 92.92% of the variance, which is just shy of 95%. However, even though the exact threshold is not reached with two components alone, the small gap means that the first two components still capture most of the important information, and they are typically sufficient for most practical purposes.
 
-3 components for 3D PCA:
-When we consider 3D PCA with three principal components, we are able to capture 97.50% of the variance. This means that the first three components fully capture the necessary variance to exceed the 95% retention threshold, and the additional component does not significantly change the data's representation compared to the first two components.")
-        # st.write("- **3 components** for 3D PCA")
+        3 components for 3D PCA:
+        When we consider 3D PCA with three principal components, we are able to capture 97.50% of the variance. This means that the first three components fully capture the necessary variance to exceed the 95% retention threshold, and the additional component does not significantly change the data's representation compared to the first two components.
+        """)
 
     # Collapsible section for top eigenvalues
     with st.expander("Top Eigenvalues"):
-        st.write("The top two eigenvalues are:")
-        st.write(f"In PCA, the eigenvalues represent the amount of variance captured by each principal component. These values tell us how much of the original data’s variability is explained by each principal component. In your case, the top two eigenvalues are:
+        st.write("""
+        The top two eigenvalues are:
+        In PCA, the eigenvalues represent the amount of variance captured by each principal component. These values tell us how much of the original data’s variability is explained by each principal component. In your case, the top two eigenvalues are:
 
-6.3523969: This is the eigenvalue corresponding to the first principal component. It explains the largest amount of variance in the dataset and captures the direction of the maximum variability in the data. This component is crucial as it retains the most significant information from the original dataset.
+        6.3523969: This is the eigenvalue corresponding to the first principal component. It explains the largest amount of variance in the dataset and captures the direction of the maximum variability in the data. This component is crucial as it retains the most significant information from the original dataset.
 
-0.62144372: This eigenvalue corresponds to the second principal component. While it captures less variance than the first, it still provides valuable information. This component is orthogonal to the first and captures the next most significant direction of variance in the data.
+        0.62144372: This eigenvalue corresponds to the second principal component. While it captures less variance than the first, it still provides valuable information. This component is orthogonal to the first and captures the next most significant direction of variance in the data.
 
-These eigenvalues indicate the importance of the first two components in explaining the data’s variability, with the first component contributing the most and the second contributing significantly less. By focusing on these components, we can reduce the dimensionality of the data while retaining most of its critical information.")
-        # st.write(f"- **0.62144372** (Explains the variance captured by the second principal component)")
+        These eigenvalues indicate the importance of the first two components in explaining the data’s variability, with the first component contributing the most and the second contributing significantly less. By focusing on these components, we can reduce the dimensionality of the data while retaining most of its critical information.
+        """)
 
     # Collapsible section for visualizations
     with st.expander("PCA Visualizations"):
         st.image('2d_pca_visualization.png', caption='2D PCA - First Two Principal Components')
-        st.write('The 2D PCA visualization provides a plot of the data reduced to two dimensions using the first two principal components. This 2D scatter plot shows how the data is distributed along the first and second principal components. With 92.92% of the variance captured by these two components, the plot gives a clear picture of the overall structure and relationships within the data. It helps us identify patterns, clusters, or outliers in the dataset while maintaining most of the important information, making it easier to analyze and interpret.'
+        st.write("""
+        The 2D PCA visualization provides a plot of the data reduced to two dimensions using the first two principal components. This 2D scatter plot shows how the data is distributed along the first and second principal components. With 92.92% of the variance captured by these two components, the plot gives a clear picture of the overall structure and relationships within the data. It helps us identify patterns, clusters, or outliers in the dataset while maintaining most of the important information, making it easier to analyze and interpret.
+        """)
         st.image('3d_pca_visualization.png', caption='3D PCA - First Three Principal Components')
+        st.write("""
+        The 3D PCA visualization extends the concept by adding a third principal component, capturing 97.50% of the variance in the data. This 3D scatter plot offers a more comprehensive view of the data, showing how the data points are distributed along the first three principal components. The 3D visualization allows for a more nuanced interpretation of the data, revealing patterns and structures that may not be as apparent in the 2D plot. It provides a richer understanding of the dataset's complexity while still reducing the dimensionality.
+        """)
 
 elif section == "Models Implemented":
     # st.title("Models Implemented")
