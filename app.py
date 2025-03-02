@@ -60,7 +60,7 @@ def collapsible_section(title, content):
 
 # Sidebar for Navigation
 st.sidebar.title("Navigation")
-section = st.sidebar.selectbox("Select a Section", ["Introduction", "Data Collection and Cleaning", "Data Visualizations", "Models Implemented", "Conclusion"], key="nav")
+section = st.sidebar.selectbox("Select a Section", ["Introduction", "Data Collection and Cleaning", "Data Visualizations","PCA", "Models Implemented", "Conclusion"], key="nav")
 
 # Title of the web app
 st.title("Data Science Project")
@@ -89,7 +89,12 @@ if section == "Introduction":
     Understanding sea level rise is essential for policymakers, urban planners, and environmentalists. Rising sea levels can lead to severe flooding, erosion, and the loss of habitats for both humans and wildlife. Coastal cities face risks of damage to infrastructure, while low-lying countries might experience devastating consequences. Predicting future sea levels will enable governments and organizations to take proactive measures such as building sea walls, improving drainage systems, and enforcing climate adaptation strategies.
 
     With the help of advanced machine learning techniques and a robust dataset, we can develop models that provide insights into the likely future behavior of sea levels, helping to reduce risks and ensure a sustainable future for coastal populations.    """)
-    
+
+    # Collapsible section for additional information
+    collapsible_section("Why is sea level rise a critical issue?", """
+    Sea level rise is one of the most significant indicators of climate change, and its impacts are far-reaching. The increasing water levels have severe implications for coastal areas, which are home to millions of people globally. As global temperatures rise, ice caps and glaciers are melting, contributing to the rising sea levels. The thermal expansion of seawater, another major cause of sea level rise, is expected to continue in the coming decades, making coastal cities increasingly vulnerable. Moreover, the rise in sea levels can lead to more frequent and severe storm surges, which can result in devastating flooding and damage to infrastructure. Consequently, understanding and predicting sea level rise is crucial for effective planning and mitigation strategies.
+    """)
+
     collapsible_section("Questions which this project aims to answer?", """
     1. What is the trend of sea level rise over the past few years in the monitored location?
     2. How do seasonal changes affect water levels in the region?
@@ -411,6 +416,46 @@ if section == "Data Visualizations":
     ax9.set_ylabel('')
     plt.tight_layout()
     st.pyplot(fig9)
+elif section=="PCA":
+    st.title("Principal Component Analysis (PCA)")
+    
+    # PCA Description
+    st.header("What is PCA?")
+    st.write("""
+    Principal Component Analysis (PCA) is a statistical method used to reduce the dimensionality of large datasets by transforming them into a new set of orthogonal variables called principal components. These components capture the maximum variance in the data, helping to simplify complex datasets while retaining as much of the important information as possible. PCA is widely used for data visualization, noise reduction, and feature selection in machine learning models.
+    """)
+
+    st.header("Steps Involved in PCA")
+    st.write("""
+    1. **Data Preprocessing**: The dataset is cleaned and numerical features are selected.
+    2. **Standardization**: The data is normalized to ensure all features contribute equally to the PCA.
+    3. **PCA Transformation**: We apply PCA on the dataset, reducing its dimensionality to 2D and 3D.
+    4. **Visualization**: Visualize the 2D and 3D projections of the transformed data.
+    5. **Variance Analysis**: We calculate the variance explained by the principal components and determine how many components are needed to retain at least 95% of the variance.
+    6. **Eigenvalues**: We compute the eigenvalues of the principal components.
+    """)
+
+    # Collapsible section for variance explained
+    with st.expander("Variance Explained by PCA Components"):
+        st.write(f"Variance explained by 2 components: **92.92%**")
+        st.write(f"Variance explained by 3 components: **97.50%**")
+
+    # Collapsible section for components needed for 95% variance retention
+    with st.expander("Number of Components for 95% Variance Retention"):
+        st.write("To retain at least 95% of the variance, we need:")
+        st.write("- **2 components** for 2D PCA")
+        st.write("- **3 components** for 3D PCA")
+
+    # Collapsible section for top eigenvalues
+    with st.expander("Top Eigenvalues"):
+        st.write("The top two eigenvalues are:")
+        st.write(f"- **6.3523969** (Explains the variance captured by the first principal component)")
+        st.write(f"- **0.62144372** (Explains the variance captured by the second principal component)")
+
+    # Collapsible section for visualizations
+    with st.expander("PCA Visualizations"):
+        st.image('/mnt/data/2d_pca_visualization.png', caption='2D PCA - First Two Principal Components')
+        st.image('/mnt/data/3d_pca_visualization.png', caption='3D PCA - First Three Principal Components')
 
 elif section == "Models Implemented":
     # st.title("Models Implemented")
