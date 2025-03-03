@@ -625,7 +625,7 @@ if section == "ARM":
     
     # Display Dataset Sample
     st.image("arm_data_sample.png", caption="Sample of Transformed Dataset for ARM")
-    st.write("[Download Dataset](arm_dataset.csv)")
+    st.write("[Download Dataset](https://github.com/VarunnReddyy/sea_level_rise/blob/main/station%201611400dataaset.csv)")
     
     # Code Section
     st.header("ARM Code Implementation")
@@ -638,7 +638,7 @@ if section == "ARM":
     The algorithm was implemented using Python and the `mlxtend` library.
     
     """)
-    st.write("[View Full Code](arm_code.py)")
+    st.write("[View Full Code](https://github.com/VarunnReddyy/sea_level_rise)")
     
     # Results
     st.header("ARM Results & Analysis")
