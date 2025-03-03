@@ -557,10 +557,10 @@ if section == "Clustering":
     tabs = ["Silhouette Score", "KMeans Clustering", "Hierarchical Dendrogram", "DBSCAN Clustering"]
     selected_tab = st.selectbox("Select a clustering method to view results:", tabs)
     image_paths = {
-        "Silhouette Score": "silhouette_score.png",
-        "KMeans Clustering": "kmeans_clusters.png",
-        "Hierarchical Dendrogram": "hierarchical_dendrogram.png",
-        "DBSCAN Clustering": "dbscan_clusters.png"
+        "Silhouette Score": 'silhouette_score.png',
+        "KMeans Clustering": 'kmeans_clusters.png',
+        "Hierarchical Dendrogram": 'hierarchical_dendrogram.png',
+        "DBSCAN Clustering": 'dbscan_clusters.png'
     }
     if selected_tab in image_paths:
         image_path = image_paths[selected_tab]
