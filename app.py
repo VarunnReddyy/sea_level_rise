@@ -60,7 +60,7 @@ def collapsible_section(title, content):
 
 # Sidebar for Navigation
 st.sidebar.title("Navigation")
-section = st.sidebar.selectbox("Select a Section", ["Introduction", "Data Collection and Cleaning", "Data Visualizations","PCA","Clustering", "Models Implemented", "Conclusion"], key="nav")
+section = st.sidebar.selectbox("Select a Section", ["Introduction", "Data Collection and Cleaning", "Data Visualizations","PCA","Clustering","ARM", "Models Implemented", "Conclusion"], key="nav")
 
 # Title of the web app
 st.title("Data Science Project")
@@ -585,6 +585,92 @@ if section == "Clustering":
     The choice of clustering algorithm depends on the data structure, computational constraints, and intended use case.
     """)
 
+# ARM Section
+if section == "ARM":
+    st.title("Association Rule Mining (ARM)")
+    
+    # Overview
+    st.header("Overview of ARM")
+    st.write("""
+    Association Rule Mining (ARM) is a technique used to uncover interesting relationships (rules) between variables in large datasets.
+    It is widely used in market basket analysis, where it identifies associations between frequently purchased items.
+    
+    The three key metrics used in ARM are:
+    
+    - **Support**: Measures how frequently an itemset appears in the dataset.
+    - **Confidence**: Indicates the likelihood that the consequent appears given that the antecedent is present.
+    - **Lift**: Evaluates how much more likely the consequent is to appear with the antecedent compared to random chance.
+    
+    The **Apriori Algorithm** is one of the most common techniques for ARM. It works as follows:
+    1. Identifies frequent itemsets in the dataset based on a minimum support threshold.
+    2. Generates association rules from these itemsets using confidence and lift measures.
+    3. Filters out weak rules, leaving only strong associations that provide valuable insights.
+    
+    ARM is particularly useful in domains such as retail analytics, bioinformatics, fraud detection, and sea level pattern analysis.
+    """)
+    
+    # Display Images
+    st.image("arm_example1.png", caption="Example of Association Rule Mining")
+    st.image("arm_example2.png", caption="Apriori Algorithm Workflow")
+    
+    # Data Preparation
+    st.header("Data Preparation for ARM")
+    st.write("""
+    Association Rule Mining requires a dataset in a **transaction format**, meaning each row should represent a set of co-occurring items.
+    Unlike supervised learning models, ARM does not require labeled data.
+    
+    In our case, we transformed the dataset into a **binary format**, where each column represents a feature, and values indicate the presence (1) or absence (0) of that feature.
+    The dataset sample below illustrates how the data was structured before applying ARM:
+    """)
+    
+    # Display Dataset Sample
+    st.image("arm_data_sample.png", caption="Sample of Transformed Dataset for ARM")
+    st.write("[Download Dataset](arm_dataset.csv)")
+    
+    # Code Section
+    st.header("ARM Code Implementation")
+    st.write("""
+    We used the **Apriori algorithm** to generate association rules. The key parameters used were:
+    - **Minimum Support:** 0.05
+    - **Minimum Confidence:** 0.5
+    - **Minimum Lift:** 0.5
+    
+    The algorithm was implemented using Python and the `mlxtend` library.
+    
+    """)
+    st.write("[View Full Code](arm_code.py)")
+    
+    # Results
+    st.header("ARM Results & Analysis")
+    st.write("""
+    After running the Apriori algorithm, we extracted the **top 15 association rules** based on different evaluation metrics.
+    """)
+    
+    # Display Results
+    tabs = ["Top Rules by Support", "Top Rules by Confidence", "Top Rules by Lift", "Network Visualization"]
+    selected_tab = st.selectbox("Select Result View:", tabs)
+    
+    image_paths = {
+        "Top Rules by Support": "arm_top_support.png",
+        "Top Rules by Confidence": "arm_top_confidence.png",
+        "Top Rules by Lift": "arm_top_lift.png",
+        "Network Visualization": "association_rule_network.png"
+    }
+    
+    if selected_tab in image_paths:
+        image = Image.open(image_paths[selected_tab])
+        st.image(image, caption=selected_tab, use_container_width=True)
+    
+    # Conclusion
+    st.header("Conclusions")
+    st.write("""
+    The analysis revealed the following insights:
+    - **Most association rules were weak**, indicating that there were no strong co-occurrence patterns in the dataset.
+    - **Some relationships were observed** between sea level metrics such as `MSL` and `MHW`, but they were not strong enough to be considered actionable insights.
+    - **Alternative approaches**, such as correlation analysis or clustering, might be more effective in understanding sea level variations.
+    
+    The findings suggest that while ARM is a powerful tool, its applicability depends on the dataset structure and the presence of frequent itemsets.
+    """)
 
 elif section == "Models Implemented":
     # st.title("Models Implemented")
