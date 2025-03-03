@@ -60,7 +60,7 @@ def collapsible_section(title, content):
 
 # Sidebar for Navigation
 st.sidebar.title("Navigation")
-section = st.sidebar.selectbox("Select a Section", ["Introduction", "Data Collection and Cleaning", "Data Visualizations","PCA", "Models Implemented", "Conclusion"], key="nav")
+section = st.sidebar.selectbox("Select a Section", ["Introduction", "Data Collection and Cleaning", "Data Visualizations","PCA","Clustering", "Models Implemented", "Conclusion"], key="nav")
 
 # Title of the web app
 st.title("Data Science Project")
@@ -494,6 +494,68 @@ elif section == "PCA":
         st.write("""
         The 3D PCA visualization extends the concept by adding a third principal component, capturing 97.50% of the variance in the data. This 3D scatter plot offers a more comprehensive view of the data, showing how the data points are distributed along the first three principal components. The 3D visualization allows for a more nuanced interpretation of the data, revealing patterns and structures that may not be as apparent in the 2D plot. It provides a richer understanding of the dataset's complexity while still reducing the dimensionality.
         """)
+elif section == "Clustering":
+    st.title("Clustering Analysis")
+    st.header("Understanding Clustering")
+    st.write("""
+    Clustering is a fundamental unsupervised learning technique used to group data points with similar characteristics. Unlike classification, clustering does not rely on predefined labels; instead, it identifies natural patterns in the data.
+    """)
+    
+    # Comparison of Clustering Methods
+    st.subheader("Comparison of Clustering Methods")
+    data = {
+        "Clustering Method": ["K-Means", "Hierarchical Clustering", "DBSCAN"],
+        "Concept": [
+            "Partitions data into k clusters by minimizing variance within clusters.",
+            "Builds a tree-like structure of nested clusters by merging or splitting data points.",
+            "Groups points based on density, identifying core, border, and noise points."
+        ],
+        "Requires k?": ["Yes", "No", "No"],
+        "Works Well For": [
+            "Well-separated spherical clusters.",
+            "Nested structures, hierarchical relationships.",
+            "Arbitrary-shaped clusters, noise handling."
+        ],
+        "Weaknesses": [
+            "Sensitive to initial centroids and k selection.",
+            "Computationally expensive for large datasets.",
+            "Struggles with varying densities and high-dimensional data."
+        ],
+        "Computational Complexity": ["O(n*k*i)", "O(n^2)", "O(n log n)"],
+        "Best Use Cases": [
+            "Customer segmentation, image compression.",
+            "Taxonomy development, social network analysis.",
+            "Anomaly detection, spatial data clustering."
+        ]
+    }
+    comparison_df = pd.DataFrame(data)
+    st.dataframe(comparison_df)
+    
+    # Data Preparation Section
+    st.subheader("Data Preparation")
+    st.write("We used the PCA-processed dataset, ensuring it was standardized and had reduced dimensions for efficient clustering.")
+    
+    # Clustering Results
+    st.subheader("Clustering Results")
+    tabs = ["Silhouette Score", "KMeans Clustering", "Hierarchical Dendrogram", "DBSCAN Clustering"]
+    selected_tab = st.selectbox("Select a clustering method to view results:", tabs)
+    image_paths = {
+        "Silhouette Score": "silhouette_score.png",
+        "KMeans Clustering": "kmeans_clusters.png",
+        "Hierarchical Dendrogram": "hierarchical_dendrogram.png",
+        "DBSCAN Clustering": "dbscan_clusters.png"
+    }
+    if selected_tab in image_paths:
+        image = Image.open(image_paths[selected_tab])
+        st.image(image, caption=selected_tab, use_column_width=True)
+    
+    # Summary & Conclusions
+    st.subheader("Summary & Conclusions")
+    st.markdown("""
+    - **K-Means**: Performs well with well-separated clusters but requires choosing k.
+    - **Hierarchical Clustering**: Provides a dendrogram for hierarchical relationships but is computationally expensive.
+    - **DBSCAN**: Detects noise and arbitrary-shaped clusters well but struggles with varying densities.
+    """)
 
 elif section == "Models Implemented":
     # st.title("Models Implemented")
