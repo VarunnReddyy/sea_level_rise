@@ -657,9 +657,16 @@ if section == "ARM":
         "Network Visualization": 'association_rule_network.png'
     }
     
+    import os
+    from PIL import Image
+    
     if selected_tab in image_paths:
-        image = Image.open(image_paths[selected_tab])
-        st.image(image, caption=selected_tab, use_container_width=True)
+        image_path = image_paths[selected_tab]
+        if os.path.exists(image_path):
+            image = Image.open(image_path)
+            st.image(image, caption=selected_tab, use_container_width=True)
+        else:
+            st.error(f"Image not found: {image_path}. Please check the file path or upload the missing image.")
     
     # Conclusion
     st.header("Conclusions")
