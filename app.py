@@ -551,17 +551,22 @@ if section == "Clustering":
     - **Standardization:** The data was normalized using StandardScaler to ensure that all features had a mean of 0 and a standard deviation of 1. This prevents bias toward larger numerical values.
     - **Dimensionality Reduction:** PCA was applied to reduce the dataset to three principal components while preserving as much variance as possible.
     """)
-    
-    # Clustering Results
+
+
     st.subheader("Clustering Results")
-    tabs = ["Silhouette Score", "KMeans Clustering", "Hierarchical Dendrogram", "DBSCAN Clustering"]
+    tabs = ["Silhouette Score", "K-Means (k=2)", "K-Means (k=3)", "K-Means (k=4)", "Hierarchical Dendrogram", "DBSCAN Clustering"]
     selected_tab = st.selectbox("Select a clustering method to view results:", tabs)
+    
     image_paths = {
         "Silhouette Score": 'silhouette_score.png',
+        "K-Means (k=2)": 'kmeans_k2.png',
+        "K-Means (k=3)": 'kmeans_k3.png',
+        "K-Means (k=4)": 'kmeans_k4.png',
         "KMeans Clustering": 'kmeans_clusters.png',
         "Hierarchical Dendrogram": 'hierarchical_dendrogram.png',
         "DBSCAN Clustering": 'dbscan_clusters.png'
     }
+    
     import os
     from PIL import Image
     
@@ -572,6 +577,29 @@ if section == "Clustering":
             st.image(image, caption=selected_tab, use_container_width=True)
         else:
             st.error(f"Image not found: {image_path}. Please check the file path or upload the missing image.")
+    
+    #
+    
+    # # Clustering Results
+    # st.subheader("Clustering Results")
+    # tabs = ["Silhouette Score", "KMeans Clustering", "Hierarchical Dendrogram", "DBSCAN Clustering"]
+    # selected_tab = st.selectbox("Select a clustering method to view results:", tabs)
+    # image_paths = {
+    #     "Silhouette Score": 'silhouette_score.png',
+    #     "KMeans Clustering": 'kmeans_clusters.png',
+    #     "Hierarchical Dendrogram": 'hierarchical_dendrogram.png',
+    #     "DBSCAN Clustering": 'dbscan_clusters.png'
+    # }
+    # import os
+    # from PIL import Image
+    
+    # if selected_tab in image_paths:
+    #     image_path = image_paths[selected_tab]
+    #     if os.path.exists(image_path):
+    #         image = Image.open(image_path)
+    #         st.image(image, caption=selected_tab, use_container_width=True)
+    #     else:
+    #         st.error(f"Image not found: {image_path}. Please check the file path or upload the missing image.")
     
     # Summary & Conclusions
     st.subheader("Summary & Conclusions")
