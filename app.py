@@ -545,10 +545,17 @@ if section == "Clustering":
         "Hierarchical Dendrogram": 'hierarchical_dendrogram.png',
         "DBSCAN Clustering": 'dbscan_clusters.png'
     }
-    if selected_tab in image_paths:
-        image = Image.open(image_paths[selected_tab])
-        st.image(image, caption=selected_tab, use_column_width=True)
+    import os
+    from PIL import Image
     
+    if selected_tab in image_paths:
+        image_path = image_paths[selected_tab]
+        if os.path.exists(image_path):
+            image = Image.open(image_path)
+            st.image(image, caption=selected_tab, use_column_width=True)
+        else:
+            st.error(f"Image not found: {image_path}. Please check the file path or upload the missing image.")
+
     # Summary & Conclusions
     st.subheader("Summary & Conclusions")
     st.markdown("""
