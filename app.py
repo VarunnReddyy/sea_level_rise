@@ -494,7 +494,7 @@ elif section == "PCA":
         st.write("""
         The 3D PCA visualization extends the concept by adding a third principal component, capturing 97.50% of the variance in the data. This 3D scatter plot offers a more comprehensive view of the data, showing how the data points are distributed along the first three principal components. The 3D visualization allows for a more nuanced interpretation of the data, revealing patterns and structures that may not be as apparent in the 2D plot. It provides a richer understanding of the dataset's complexity while still reducing the dimensionality.
         """)
-elif section == "Clustering":
+if section == "Clustering":
     st.title("Clustering Analysis")
     st.header("Understanding Clustering")
     st.write("""
