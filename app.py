@@ -494,11 +494,21 @@ elif section == "PCA":
         st.write("""
         The 3D PCA visualization extends the concept by adding a third principal component, capturing 97.50% of the variance in the data. This 3D scatter plot offers a more comprehensive view of the data, showing how the data points are distributed along the first three principal components. The 3D visualization allows for a more nuanced interpretation of the data, revealing patterns and structures that may not be as apparent in the 2D plot. It provides a richer understanding of the dataset's complexity while still reducing the dimensionality.
         """)
+# Clustering Section
 if section == "Clustering":
     st.title("Clustering Analysis")
     st.header("Understanding Clustering")
     st.write("""
-    Clustering is a fundamental unsupervised learning technique used to group data points with similar characteristics. Unlike classification, clustering does not rely on predefined labels; instead, it identifies natural patterns in the data.
+    Clustering is an unsupervised machine learning technique used to group similar data points together based on certain characteristics. Unlike classification, clustering does not require predefined labels; instead, it uncovers patterns and structures in data by grouping similar observations together. 
+    
+    **Why Use Clustering?**
+    Clustering is widely used across various domains, including market segmentation, anomaly detection, social network analysis, and image recognition. It helps in exploratory data analysis by revealing hidden patterns, detecting outliers, and simplifying datasets for more efficient processing.
+    
+    There are multiple clustering techniques, each suited for different types of data:
+    
+    - **K-Means Clustering:** This method partitions the dataset into k clusters by minimizing variance within clusters. It is efficient but requires predefining the number of clusters.
+    - **Hierarchical Clustering:** This method builds a hierarchy of clusters using either agglomerative (bottom-up) or divisive (top-down) approaches. It is useful for understanding relationships between clusters but can be computationally expensive.
+    - **DBSCAN (Density-Based Spatial Clustering):** This method groups points based on high-density regions, identifying core, border, and noise points. It is useful for detecting arbitrary-shaped clusters but struggles with varying density.
     """)
     
     # Comparison of Clustering Methods
@@ -533,36 +543,45 @@ if section == "Clustering":
     
     # Data Preparation Section
     st.subheader("Data Preparation")
-    st.write("We used the PCA-processed dataset, ensuring it was standardized and had reduced dimensions for efficient clustering.")
+    st.write("""
+    The dataset used for clustering was prepared with the following steps:
+    
+    - **Label Removal:** Since clustering is unsupervised, any labeled categories were removed to ensure that the model does not use predefined classifications.
+    - **Feature Selection:** Only numerical (quantitative) features were retained to allow distance-based clustering techniques to work effectively.
+    - **Standardization:** The data was normalized using StandardScaler to ensure that all features had a mean of 0 and a standard deviation of 1. This prevents bias toward larger numerical values.
+    - **Dimensionality Reduction:** PCA was applied to reduce the dataset to three principal components while preserving as much variance as possible.
+    """)
     
     # Clustering Results
     st.subheader("Clustering Results")
     tabs = ["Silhouette Score", "KMeans Clustering", "Hierarchical Dendrogram", "DBSCAN Clustering"]
     selected_tab = st.selectbox("Select a clustering method to view results:", tabs)
     image_paths = {
-        "Silhouette Score": 'silhouette_score.png',
-        "KMeans Clustering": 'kmeans_clusters.png',
-        "Hierarchical Dendrogram": 'hierarchical_dendrogram.png',
-        "DBSCAN Clustering": 'dbscan_clusters.png'
+        "Silhouette Score": "silhouette_score.png",
+        "KMeans Clustering": "kmeans_clusters.png",
+        "Hierarchical Dendrogram": "hierarchical_dendrogram.png",
+        "DBSCAN Clustering": "dbscan_clusters.png"
     }
-    import os
-    from PIL import Image
-    
     if selected_tab in image_paths:
         image_path = image_paths[selected_tab]
         if os.path.exists(image_path):
             image = Image.open(image_path)
-            st.image(image, caption=selected_tab, use_column_width=True)
+            st.image(image, caption=selected_tab, use_container_width=True)
         else:
             st.error(f"Image not found: {image_path}. Please check the file path or upload the missing image.")
-
+    
     # Summary & Conclusions
     st.subheader("Summary & Conclusions")
-    st.markdown("""
-    - **K-Means**: Performs well with well-separated clusters but requires choosing k.
-    - **Hierarchical Clustering**: Provides a dendrogram for hierarchical relationships but is computationally expensive.
-    - **DBSCAN**: Detects noise and arbitrary-shaped clusters well but struggles with varying densities.
+    st.write("""
+    After analyzing the clustering results, we can conclude the following:
+    
+    - **K-Means:** This method was effective for detecting well-separated clusters but required choosing an optimal k value, which was determined using the Silhouette Score.
+    - **Hierarchical Clustering:** The dendrogram provided insights into the hierarchical relationships between data points, but this method was computationally expensive.
+    - **DBSCAN:** This technique excelled at detecting non-linear clusters and noise, making it useful for datasets with varying densities. However, fine-tuning hyperparameters like epsilon and minimum samples was necessary.
+    
+    The choice of clustering algorithm depends on the data structure, computational constraints, and intended use case.
     """)
+
 
 elif section == "Models Implemented":
     # st.title("Models Implemented")
