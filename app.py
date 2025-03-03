@@ -562,6 +562,9 @@ if section == "Clustering":
         "Hierarchical Dendrogram": 'hierarchical_dendrogram.png',
         "DBSCAN Clustering": 'dbscan_clusters.png'
     }
+    import os
+    from PIL import Image
+    
     if selected_tab in image_paths:
         image_path = image_paths[selected_tab]
         if os.path.exists(image_path):
