@@ -561,8 +561,6 @@ if section == "Clustering":
         "Silhouette Score": 'silhouette_score.png',
         "K-Means (k=2)": 'kmeans_k2.png',
         "K-Means (k=3)": 'kmeans_k3.png',
-        "K-Means (k=4)": 'kmeans_k4.png',
-        "KMeans Clustering": 'kmeans_clusters.png',
         "Hierarchical Dendrogram": 'hierarchical_dendrogram.png',
         "DBSCAN Clustering": 'dbscan_clusters.png'
     }
