@@ -680,11 +680,19 @@ if section == "ARM":
     The dataset sample below illustrates how the data was structured before applying ARM:
     """)
     
-    # Display Dataset Sample
-    st.image("arm_data_sample.png", caption="Sample of Transformed Dataset for ARM")
-    st.write("[Download Dataset](https://github.com/VarunnReddyy/sea_level_rise/blob/main/station%201611400dataaset.csv)")
+    # Display Image: Dataset Before Cleaning
+    st.image('dataset_image.jpeg', caption="Dataset Before Cleaning")
     
-    # Code Section
+    st.write("""
+    After cleaning and transforming the data, the dataset is structured in a way that it can now be used for ARM. Below is the cleaned version of the dataset:
+    """)
+    
+    # Display Image: Dataset After Cleaning
+    st.image('cleaned_arm.png', caption="Dataset After Cleaning")
+    
+    # st.write("[Download Cleaned Dataset](https://github.com/VarunnReddyy/sea_level_rise/blob/main/station%201611400dataaset.csv)")
+    
+    # Code Section for ARM Implementation
     st.header("ARM Code Implementation")
     st.write("""
     We used the **Apriori algorithm** to generate association rules. The key parameters used were:
@@ -693,11 +701,10 @@ if section == "ARM":
     - **Minimum Lift:** 0.5
     
     The algorithm was implemented using Python and the `mlxtend` library.
-    
     """)
-    st.write("[View Full Code](https://github.com/VarunnReddyy/sea_level_rise)")
+    # st.write("[View Full Code](https://github.com/VarunnReddyy/sea_level_rise)")
     
-    # Results
+    # Results Section
     st.header("ARM Results & Analysis")
     st.write("""
     After running the Apriori algorithm, we extracted the **top 15 association rules** based on different evaluation metrics.
@@ -711,6 +718,8 @@ if section == "ARM":
         "Top Rules by Support": 'arm_top_support.png',
         "Top Rules by Confidence": 'arm_top_confidence.png',
         "Top Rules by Lift": 'arm_top_lift.png',
+        "support vs confidence with lift":'arm_s_c_vslift.png'
+        "Top 15 Association rules based on support, confidence and lift":'t15.png'
         "Network Visualization": 'association_rule_network.png'
     }
     
