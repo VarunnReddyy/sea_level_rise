@@ -549,6 +549,7 @@ if section == "Clustering":
     }
     comparison_df = pd.DataFrame(data)
     st.dataframe(comparison_df)
+    st.image('clusteringexampleimage.avif', caption="Example of Clustering")
     
     # Data Preparation Section
     st.subheader("Data Preparation")
