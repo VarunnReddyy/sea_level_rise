@@ -743,13 +743,31 @@ if section == "ARM":
     # Conclusion
     st.header("Conclusions")
     st.write("""
-    The analysis revealed the following insights:
-    - **Most association rules were weak**, indicating that there were no strong co-occurrence patterns in the dataset.
-    - **Some relationships were observed** between sea level metrics such as `MSL` and `MHW`, but they were not strong enough to be considered actionable insights.
-    - **Alternative approaches**, such as correlation analysis or clustering, might be more effective in understanding sea level variations.
+    **General Conclusion on Association Rule Mining (ARM):**
     
-    The findings suggest that while ARM is a powerful tool, its applicability depends on the dataset structure and the presence of frequent itemsets.
+    The analysis of the dataset using Association Rule Mining (ARM) has provided insightful results. By using the Apriori algorithm, we successfully identified frequent itemsets and extracted association rules, with the top 15 rules based on support, confidence, and lift being particularly informative.
+    
+    **Key Insights:**
+    
+    - **Support**: The association rules identified in the top 15 are highly frequent, with support values indicating that the antecedents and consequents occur often in the dataset.
+    - **Confidence**: The confidence values for the top rules are close to 1, indicating a strong likelihood that the consequent occurs given the presence of the antecedent.
+    - **Lift**: The lift values suggest that the relationships between the antecedents and consequents are stronger than what would be expected by random chance, highlighting interesting patterns in the data.
+    
+    The visualizations further demonstrate the relationships between support, confidence, and lift, offering a clearer understanding of how these metrics interact in association rule mining. The scatter plot of support versus confidence with lift as a color map effectively captures this relationship, providing an overall view of the strength and frequency of rules across the dataset.
+    
+    The **network visualization** also helped in understanding the connections between the different variables, showcasing how attributes like `MSL (ft)`, `MLW (ft)`, and `MTL (ft)` are linked in frequent patterns.
+    
+    **Application to the Project:**
+    
+    In the context of sea level rise analysis, ARM can uncover patterns in the relationships between different sea level metrics. By understanding these relationships, we can identify key factors influencing sea levels and predict potential shifts in coastal areas over time.
+    
+    For instance, the rules showing relationships between metrics like `MHW (ft)` and `MSL (ft)` or `MLW (ft)` and `MTL (ft)` could provide valuable insights into how variations in these levels are correlated. This could help in assessing the impact of different sea levels on the environment, informing coastal management and policy-making.
+    
+    **Conclusion for the Project:**
+    
+    While ARM helped uncover certain relationships between the variables, the findings suggest that further analysis using other methods such as clustering or correlation analysis might offer deeper insights. ARM's strength lies in uncovering frequent patterns, but its application is most effective when used alongside other techniques to provide a more comprehensive understanding of complex phenomena like sea level rise.
     """)
+
 
 elif section == "Models Implemented":
     # st.title("Models Implemented")
