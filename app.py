@@ -450,6 +450,11 @@ elif section == "PCA":
     5. **Variance Analysis**: We calculate the variance explained by the principal components and determine how many components are needed to retain at least 95% of the variance.
     6. **Eigenvalues**: We compute the eigenvalues of the principal components.
     """)
+        # Display image of the dataset before processing
+    st.image('dataset_image.jpeg', caption="Dataset Before Processing")
+    
+    # Display image of the dataset after processing
+    st.image('dataset_after_processing.png', caption="Dataset After Processing")
 
     # Collapsible section for variance explained
     with st.expander("Variance Explained by PCA Components"):
@@ -551,6 +556,13 @@ if section == "Clustering":
     - **Standardization:** The data was normalized using StandardScaler to ensure that all features had a mean of 0 and a standard deviation of 1. This prevents bias toward larger numerical values.
     - **Dimensionality Reduction:** PCA was applied to reduce the dataset to three principal components while preserving as much variance as possible.
     """)
+    
+    # Display image of the dataset before processing
+    st.image('dataset_image.jpeg', caption="Dataset Before Processing")
+    
+    # Display image of the dataset after processing
+    st.image('dataset_after_processing.png', caption="Dataset After Processing")
+
 
 
     st.subheader("Clustering Results")
@@ -602,14 +614,24 @@ if section == "Clustering":
     # Summary & Conclusions
     st.subheader("Summary & Conclusions")
     st.write("""
-    Summary & Conclusions
-    After analyzing the clustering results, we can conclude the following:
+    After applying multiple clustering algorithms and analyzing the results, we conclude the following:
     
-    K-Means: This method was effective for detecting well-separated clusters but required choosing an optimal k value, which was determined using the Silhouette Score.
-    Hierarchical Clustering: The dendrogram provided insights into the hierarchical relationships between data points, but this method was computationally expensive.
-    DBSCAN: This technique excelled at detecting non-linear clusters and noise, making it useful for datasets with varying densities. However, fine-tuning hyperparameters like epsilon and minimum samples was necessary.
-    The choice of clustering algorithm depends on the data structure, computational constraints, and intended use case.
+    **K-Means Clustering**:
+    - The **K-Means clustering** method performed well at detecting well-separated clusters in the dataset. The **Silhouette Score** was used to determine the optimal value for `k`, and it was found that **k=3** was the best choice based on the score.
+    - The **K-Means** method provided clear visualizations (see the **K-Means Clustering (k=3)** plot), with distinct clusters and clearly defined centroids, highlighting its efficiency for this type of data.
+    - The **Silhouette Score** (shown in the plot) for various `k` values also indicated that **k=3** was the best for balancing cluster cohesion and separation.
+    
+    **Hierarchical Clustering**:
+    - **Hierarchical clustering** was applied using the **Ward's method**, with a resulting **dendrogram** (see the plot). This method allowed us to visualize the hierarchical structure of the data and how data points cluster together at different levels of granularity.
+    - While hierarchical clustering provides valuable insights into data relationships, it is more computationally expensive and may not be as effective for large datasets due to its time complexity.
+    
+    **DBSCAN (Density-Based Spatial Clustering of Applications with Noise)**:
+    - The **DBSCAN** algorithm was particularly useful for detecting **non-linear clusters** and **noise**. Unlike K-Means, DBSCAN does not require the number of clusters to be predefined and can identify outliers effectively (as seen in the DBSCAN plot).
+    - However, **DBSCAN** requires careful tuning of hyperparameters such as **epsilon (eps)** and **minimum samples**. In this case, the chosen parameters were arbitrary and should ideally be fine-tuned for better results.
+    
+    The choice of clustering algorithm depends on the data structure, computational constraints, and intended use case. Each method has its strengths and weaknesses, and selecting the right one is key to obtaining meaningful results from clustering analysis.
     """)
+
 
 # ARM Section
 if section == "ARM":
