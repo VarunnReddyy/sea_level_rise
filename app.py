@@ -566,13 +566,14 @@ if section == "Clustering":
 
 
     st.subheader("Clustering Results")
-    tabs = ["Silhouette Score", "K-Means (k=2)", "K-Means (k=3)", "Hierarchical Dendrogram", "DBSCAN Clustering"]
+    tabs = ["Silhouette Score", "K-Means (k=2)", "K-Means (k=3)","K-Means (k=4), "Hierarchical Dendrogram", "DBSCAN Clustering"]
     selected_tab = st.selectbox("Select a clustering method to view results:", tabs)
     
     image_paths = {
         "Silhouette Score": 'silhouette_score.png',
         "K-Means (k=2)": 'kmeans_k2.png',
         "K-Means (k=3)": 'kmeans_k3.png',
+        "K-Means (k=4)": 'kmeans_k4.png',
         "Hierarchical Dendrogram": 'hierarchical_dendrogram.png',
         "DBSCAN Clustering": 'dbscan_clusters.png'
     }
