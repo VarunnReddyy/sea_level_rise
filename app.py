@@ -457,7 +457,7 @@ elif section == "PCA":
     st.image('dataset_after_processing.png', caption="Dataset After Processing")
         # Add collapsible section with link to the notebook
     with st.expander("Link to PCA Notebook"):
-        st.write("You can view the full clustering analysis in the following notebook:")
+        st.write("You can view the full PCA analysis in the following notebook:")
         st.markdown("[Click here to view the notebook](https://colab.research.google.com/drive/1iY_4HWahS_eKA5GMOb9c2CBuA4bsIzng?usp=sharing)")
 
     # Collapsible section for variance explained
@@ -691,6 +691,11 @@ if section == "ARM":
     st.image('cleaned_arm.png', caption="Dataset After Cleaning")
     
     # st.write("[Download Cleaned Dataset](https://github.com/VarunnReddyy/sea_level_rise/blob/main/station%201611400dataaset.csv)")
+    with st.expander("Link to ARM Notebook"):
+        st.write("You can view the full ARM in the following notebook:")
+        st.markdown("[Click here to view the notebook](https://colab.research.google.com/drive/1HTu71UrMsTr1gFXZqVtWvH-Vqv53C88p?usp=sharing)")
+
+    
     
     # Code Section for ARM Implementation
     st.header("ARM Code Implementation")
@@ -711,7 +716,7 @@ if section == "ARM":
     """)
     
     # Display Results
-    tabs = ["Top Rules by Support", "Top Rules by Confidence","Top Rules by Lift","support vs confidence with lift","Top 15 Association rules based on support, confidence and lift", "Network Visualization"]
+    tabs = ["Top Rules by Support", "Top Rules by Confidence","Top Rules by Lift","support vs confidence with lift","Top 15 Association rules based on support, confidence and lift","top 15 rules", "Network Visualization"]
     selected_tab = st.selectbox("Select Result View:", tabs)
     
     image_paths = {
@@ -720,6 +725,7 @@ if section == "ARM":
         "Top Rules by Lift": 'arm_top_lift.png',
         "support vs confidence with lift":'arm_s_c_vslift.png',
         "Top 15 Association rules based on support, confidence and lift": 't15.png',
+        "top 15 rules":'t15rules.png,
         "Network Visualization": 'association_rule_network.png'
     }
     
