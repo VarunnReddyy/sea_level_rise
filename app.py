@@ -455,6 +455,10 @@ elif section == "PCA":
     
     # Display image of the dataset after processing
     st.image('dataset_after_processing.png', caption="Dataset After Processing")
+        # Add collapsible section with link to the notebook
+    with st.expander("Link to PCA Notebook"):
+        st.write("You can view the full clustering analysis in the following notebook:")
+        st.markdown("[Click here to view the notebook](https://colab.research.google.com/drive/1iY_4HWahS_eKA5GMOb9c2CBuA4bsIzng?usp=sharing)")
 
     # Collapsible section for variance explained
     with st.expander("Variance Explained by PCA Components"):
@@ -611,7 +615,11 @@ if section == "Clustering":
     #         st.image(image, caption=selected_tab, use_container_width=True)
     #     else:
     #         st.error(f"Image not found: {image_path}. Please check the file path or upload the missing image.")
-    
+        # Add collapsible section with link to the notebook
+    with st.expander("Link to Clustering Notebook"):
+        st.write("You can view the full clustering analysis in the following notebook:")
+        st.markdown("[Click here to view the notebook](https://colab.research.google.com/drive/11vspvx64S1142vpfVAj0e9rn8nhG40FF?usp=sharing)")
+
     # Summary & Conclusions
     st.subheader("Summary & Conclusions")
     st.write("""
