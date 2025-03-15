@@ -440,6 +440,7 @@ elif section == "PCA":
     Biology and Genetics: PCA is used to reduce the dimensionality of genomic data, making it easier to analyze and interpret complex genetic information.
     Overall, PCA is an essential tool in the field of data science, offering a way to process complex datasets, extract meaningful insights, and improve machine learning model performance.
     """)
+    st.image('pcaexample.webp', caption="Example of PCA")
 
     st.header("Steps Involved in PCA")
     st.write("""
