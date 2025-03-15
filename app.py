@@ -718,7 +718,7 @@ if section == "ARM":
         "Top Rules by Support": 'arm_top_support.png',
         "Top Rules by Confidence": 'arm_top_confidence.png',
         "Top Rules by Lift": 'arm_top_lift.png',
-        "support vs confidence with lift":'arm_s_c_vslift.png'
+        "support vs confidence with lift":'arm_s_c_vslift.png',
         "Top 15 Association rules based on support, confidence and lift": 't15.png'
         "Network Visualization": 'association_rule_network.png'
     }
