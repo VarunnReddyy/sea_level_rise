@@ -567,6 +567,18 @@ if section == "Clustering":
     # Display image of the dataset after processing
     st.image('dataset_after_processing.png', caption="Dataset After Processing")
 
+    st.subheader("Distance Metric Used")
+    st.write("""
+    In this analysis, we used **Cosine Similarity** as the distance metric for Hierarchical Clustering. 
+    Cosine Similarity measures the cosine of the angle between two vectors in the data, making it a suitable choice for identifying patterns or relationships in data where only the direction or trend is important, not the magnitude.
+        
+    **Cosine Distance**, which is simply `1 - Cosine Similarity`, was used to convert similarity into a distance measure. This distance metric is particularly useful when we are interested in the **similarity of trends** rather than absolute values.
+        
+    In the context of our sea level data, **Cosine Similarity** helped group together data points (regions or periods) that exhibit similar trends in sea level variations, even if their magnitudes differ. This is particularly useful for uncovering latent relationships between sea level metrics such as `MSL (ft)`, `MHW (ft)`, `MLW (ft)`, etc.
+        
+    For example, regions with similar rising or falling sea levels can be clustered together, providing insights into related patterns across different areas or time periods.
+    """)
+
 
 
     st.subheader("Clustering Results")
@@ -626,20 +638,27 @@ if section == "Clustering":
     After applying multiple clustering algorithms and analyzing the results, we conclude the following:
     
     **K-Means Clustering**:
-    - The **K-Means clustering** method performed well at detecting well-separated clusters in the dataset. The **Silhouette Score** was used to determine the optimal value for `k`, and it was found that **k=3** was the best choice based on the score.
-    - The **K-Means** method provided clear visualizations (see the **K-Means Clustering (k=3)** plot), with distinct clusters and clearly defined centroids, highlighting its efficiency for this type of data.
-    - The **Silhouette Score** (shown in the plot) for various `k` values also indicated that **k=3** was the best for balancing cluster cohesion and separation.
+    - The **K-Means clustering** method performed well at detecting well-separated clusters in the sea level dataset. The **Silhouette Score** was used to determine the optimal value for `k`, and it was found that **k=3** was the best choice based on the score.
+    - The **K-Means** method provided clear visualizations (see the **K-Means Clustering (k=3)** plot), with distinct clusters and clearly defined centroids, highlighting its efficiency for this type of data. This clustering helped identify different patterns or behaviors in sea level fluctuations across various periods or regions, which can be valuable in understanding potential impacts of sea level rise.
+    - The **Silhouette Score** (shown in the plot) for various `k` values also indicated that **k=3** was the best for balancing cluster cohesion and separation. This suggests that the sea level dataset contains three major patterns that could represent different trends in sea level rise, offering insights into potential shifts in coastal areas over time.
     
     **Hierarchical Clustering**:
-    - **Hierarchical clustering** was applied using the **Ward's method**, with a resulting **dendrogram** (see the plot). This method allowed us to visualize the hierarchical structure of the data and how data points cluster together at different levels of granularity.
-    - While hierarchical clustering provides valuable insights into data relationships, it is more computationally expensive and may not be as effective for large datasets due to its time complexity.
+    - **Hierarchical clustering** was applied using the **Ward's method**, resulting in a **dendrogram** (see the plot). This method allowed us to visualize the hierarchical structure of the data and how data points cluster together at different levels of granularity. The hierarchical approach provided additional context to the data relationships, which can be useful when trying to understand long-term trends in sea level variations across different regions.
+    - While hierarchical clustering provides valuable insights into data relationships, it is more computationally expensive and may not be as effective for large datasets due to its time complexity. This could be a limiting factor in using hierarchical clustering for large-scale sea level rise analysis across multiple regions.
     
     **DBSCAN (Density-Based Spatial Clustering of Applications with Noise)**:
-    - The **DBSCAN** algorithm was particularly useful for detecting **non-linear clusters** and **noise**. Unlike K-Means, DBSCAN does not require the number of clusters to be predefined and can identify outliers effectively (as seen in the DBSCAN plot).
-    - However, **DBSCAN** requires careful tuning of hyperparameters such as **epsilon (eps)** and **minimum samples**. In this case, the chosen parameters were arbitrary and should ideally be fine-tuned for better results.
+    - The **DBSCAN** algorithm was particularly useful for detecting **non-linear clusters** and **noise**. Unlike K-Means, DBSCAN does not require the number of clusters to be predefined and can identify outliers effectively (as seen in the DBSCAN plot). This is particularly important in sea level analysis, where unexpected fluctuations or anomalies (such as extreme weather events) can skew results and need to be handled separately.
+    - However, **DBSCAN** requires careful tuning of hyperparameters such as **epsilon (eps)** and **minimum samples**. In this case, the chosen parameters were arbitrary and should ideally be fine-tuned for better results. The fine-tuning of DBSCAN could potentially help identify more accurate noise and outlier points, which would be useful for analyzing rare or extreme sea level events that could be of interest to coastal planners and environmental analysts.
     
-    The choice of clustering algorithm depends on the data structure, computational constraints, and intended use case. Each method has its strengths and weaknesses, and selecting the right one is key to obtaining meaningful results from clustering analysis.
+    **How This Relates to Our Project**:
+    - The clustering analysis plays a crucial role in understanding the different behaviors and patterns in sea level data, which is essential for predicting future changes in sea levels. By grouping similar sea level observations together, clustering helps identify regions or periods that share similar trends, enabling better understanding of how sea levels are evolving over time and which areas are most at risk.
+    - **K-Means** clustering identified well-separated patterns in the data, helping to highlight distinct sea level behaviors that might respond differently to changes in environmental factors. This insight can aid in predicting how certain coastal regions might be more susceptible to rising sea levels than others.
+    - **DBSCAN** is valuable for detecting anomalies in the sea level data, such as outlier values that may represent extreme fluctuations or errors in the data collection process. Identifying these outliers helps ensure that the model doesn’t base predictions on erroneous or unusual data points, which is crucial for making accurate predictions in sea level rise modeling.
+    - **Hierarchical clustering** also helped us understand how different regions or time periods might be related in terms of sea level changes, offering a long-term view of how sea levels might behave across different geographic locations or historical data.
+    
+    In conclusion, clustering techniques provide essential insights into the sea level data, but **further analysis** using other techniques, such as **correlation analysis** or **time series forecasting**, would complement the findings and improve our ability to predict future sea level variations. The choice of clustering method depends on the dataset structure and analysis goals, and combining clustering with other methods can help develop a more comprehensive understanding of sea level rise and its potential impacts on coastal areas.
     """)
+
 
 
 # ARM Section
