@@ -711,7 +711,7 @@ if section == "ARM":
     """)
     
     # Display Results
-    tabs = ["Top Rules by Support", "Top Rules by Confidence", "Top Rules by Lift","support vs confidence with lift","Top 15 Association rules based on support", "confidence and lift", "Network Visualization"]
+    tabs = ["Top Rules by Support", "Top Rules by Confidence", "Top Rules by Lift,support vs confidence with lift","Top 15 Association rules based on support", "confidence and lift", "Network Visualization"]
     selected_tab = st.selectbox("Select Result View:", tabs)
     
     image_paths = {
