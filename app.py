@@ -554,7 +554,7 @@ if section == "Clustering":
 
 
     st.subheader("Clustering Results")
-    tabs = ["Silhouette Score", "K-Means (k=2)", "K-Means (k=3)", "K-Means (k=4)","KMeans Clustering", "Hierarchical Dendrogram", "DBSCAN Clustering"]
+    tabs = ["Silhouette Score", "K-Means (k=2)", "K-Means (k=3)", "Hierarchical Dendrogram", "DBSCAN Clustering"]
     selected_tab = st.selectbox("Select a clustering method to view results:", tabs)
     
     image_paths = {
@@ -602,12 +602,12 @@ if section == "Clustering":
     # Summary & Conclusions
     st.subheader("Summary & Conclusions")
     st.write("""
+    Summary & Conclusions
     After analyzing the clustering results, we can conclude the following:
     
-    - **K-Means:** This method was effective for detecting well-separated clusters but required choosing an optimal k value, which was determined using the Silhouette Score.
-    - **Hierarchical Clustering:** The dendrogram provided insights into the hierarchical relationships between data points, but this method was computationally expensive.
-    - **DBSCAN:** This technique excelled at detecting non-linear clusters and noise, making it useful for datasets with varying densities. However, fine-tuning hyperparameters like epsilon and minimum samples was necessary.
-    
+    K-Means: This method was effective for detecting well-separated clusters but required choosing an optimal k value, which was determined using the Silhouette Score.
+    Hierarchical Clustering: The dendrogram provided insights into the hierarchical relationships between data points, but this method was computationally expensive.
+    DBSCAN: This technique excelled at detecting non-linear clusters and noise, making it useful for datasets with varying densities. However, fine-tuning hyperparameters like epsilon and minimum samples was necessary.
     The choice of clustering algorithm depends on the data structure, computational constraints, and intended use case.
     """)
 
