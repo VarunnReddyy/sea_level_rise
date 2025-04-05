@@ -803,11 +803,11 @@ if section == "ARM":
 
 # Section: Naive Bayes
 if section == "Naive Bayes":
-    st.header("🧪 Naive Bayes Classifier")
+    st.header("Naive Bayes Classifier")
     st.write("This section will showcase how the Naive Bayes algorithm works on our dataset.")
     # Placeholder for future code
     st.markdown("""
-        📘 **Overview: What is Naive Bayes?**
+         **Overview: What is Naive Bayes?**
 
         Naive Bayes (NB) is a family of simple yet powerful probabilistic classifiers based on **Bayes’ Theorem**, which calculates the probability of a class given the presence of certain features. What makes it “naive” is the strong assumption that all input features are **independent** of each other given the class label — an assumption that rarely holds in practice, yet the model still performs remarkably well in many real-world tasks.
 
@@ -847,7 +847,7 @@ if section == "Naive Bayes":
     st.image("nbimage1.webp", caption="Sample NB Image", use_column_width=True)
 
 
-    with st.expander("🧹 Data Preparation for Naïve Bayes Analysis"):
+    with st.expander("Data Preparation for Naïve Bayes Analysis"):
         st.markdown("""
         To conduct supervised learning using Naïve Bayes models, the dataset must first be labeled — in this case, the **Inf** column serves as the target variable. As is standard in supervised machine learning, the dataset is split into **training and testing sets**. The training set is used to build and fit the model, while the testing set evaluates how well the model generalizes to unseen data. These sets are kept **disjoint** (i.e., non-overlapping) to prevent data leakage and ensure valid evaluation.
 
@@ -855,13 +855,13 @@ if section == "Naive Bayes":
         """)
 
         st.markdown("---")
-        st.markdown("### 🧪 Multinomial Naïve Bayes (MultinomialNB)")
+        st.markdown("### Multinomial Naïve Bayes (MultinomialNB)")
         st.markdown("""
         - **Data Format**: Discretized numerical features using `KBinsDiscretizer` (count-based bins).
         - **Why**: MultinomialNB expects non-negative, count-based inputs (similar to word counts).
         - **Train/Test Splits**: Both **70/30** and **80/20** using `train_test_split()`.
         """)
-        st.markdown("🖼️ *Preview of Binned Features (X_binned):*")
+        st.markdown("*Preview of Binned Features (X_binned):*")
         st.image("Multinomialx_binned.png", caption="Discretized X_binned Sample", use_column_width=True)
 
         st.markdown("---")
@@ -871,22 +871,22 @@ if section == "Naive Bayes":
         - **Why**: BernoulliNB is designed for binary data (0 or 1), such as feature presence/absence.
         - **Train/Test Splits**: 70/30 and 80/20 splits using `stratify=y` for class balance.
         """)
-        st.markdown("🖼️ *Preview of Binary Features (X_binary):*")
+        st.markdown("*Preview of Binary Features (X_binary):*")
         st.image("Bernoullix_binary.png", caption="Binarized Feature Sample", use_column_width=True)
 
         st.markdown("---")
-        st.markdown("### 🧪 Gaussian Naïve Bayes (GaussianNB)")
+        st.markdown("###Gaussian Naïve Bayes (GaussianNB)")
         st.markdown("""
         - **Data Format**: Continuous real-valued features, scaled using `MinMaxScaler`.
         - **Why**: GaussianNB assumes a normal distribution across continuous numeric features.
         - **Dimensionality Reduction**: Applied **PCA** to reduce dimensions while retaining 95% variance.
         - **Train/Test Splits**: Conducted both **70/30** and **80/20** on PCA-transformed data.
         """)
-        st.markdown("🖼️ *Snippet of PCA-Reduced Data:*")
+        st.markdown("*Snippet of PCA-Reduced Data:*")
         st.image("pca_reduced_gaussian.png", caption="PCA-Transformed Dataset Sample", use_column_width=True)
 
         st.markdown("---")
-        st.markdown("### ✅ Why Disjoint Sets Matter")
+        st.markdown("### Why Disjoint Sets Matter")
         st.markdown("""
         Training and testing sets must be disjoint to prevent contamination. If a model is tested on samples it saw during training, it gives inflated performance metrics. Disjoint splits ensure **realistic evaluation**, helping build models that generalize well to unseen data in the real world.
         """)
@@ -898,15 +898,15 @@ if section == "Naive Bayes":
     
     
     with st.expander("Dataset images"):
-        # st.image('dataset_image.jpeg', caption="Dataset Before Cleaning")
+        st.image('dataset_image.jpeg', caption="Dataset Before Cleaning")
     
         st.write("""
     After cleaning and transforming the data, the dataset is structured in a way that it can now be used for NB. Below is the cleaned version of the dataset:
         """)
     
     # Display Image: Dataset After Cleaning
-        # st.image('cleaned_arm.png', caption="Dataset After Cleaning")
-    st.subheader("🖼️ Naive Bayes Results & Visualizations")
+        st.image('cleaned_arm.png', caption="Dataset After Cleaning")
+    st.subheader("Naive Bayes Results & Visualizations")
 
     nb_tabs = [
         "MultinomialNB - Confusion Matrix",
@@ -935,7 +935,7 @@ if section == "Naive Bayes":
     st.subheader("🧾 Summary and Final Results – Naive Bayes on Imbalanced Dataset")
 
     st.markdown("""
-    ### 🔧 Summary of Implementation
+    ### Summary of Implementation
 
     In this project, I implemented and evaluated three variants of the Naive Bayes classification algorithm using the station 1611400 dataset:
 
@@ -947,7 +947,7 @@ if section == "Naive Bayes":
     """)
 
     st.markdown("""
-    ### 📊 Observed Performance
+    ### Observed Performance
 
     - All models consistently achieved **very high accuracy (~99%)**, regardless of the split ratio or regularization.  
     - However, the **classification reports revealed a critical flaw**: the models failed to identify any **minority class samples**. Precision, recall, and F1-score for these classes were all **0.00**.
@@ -956,7 +956,7 @@ if section == "Naive Bayes":
     """)
 
     st.markdown("""
-    ### 🧮 Confusion Matrix and Accuracy Insights
+    ### Confusion Matrix and Accuracy Insights
 
     The confusion matrix highlights the model's bias:
 
@@ -966,7 +966,7 @@ if section == "Naive Bayes":
     """)
 
     st.markdown("""
-    ### 💡 What I Learned from the Results
+    ### What I Learned from the Results
 
     From this analysis, I learned that **Naive Bayes classifiers can produce misleading results** when used on highly imbalanced datasets.  
     - **High accuracy alone does not reflect model quality** in such cases.  
@@ -981,7 +981,7 @@ if section == "Naive Bayes":
     However, it also made clear that **Naive Bayes is not suitable for this particular dataset**, and that models with built-in class handling, such as **logistic regression with class weights** or **tree-based models**, would be more appropriate.
     """)
 
-    st.markdown("### 🧪 Train-Test Split Justification (Based on Actual Results)")
+    st.markdown("### Train-Test Split Justification (Based on Actual Results)")
 
     st.markdown("""
     A crucial part of this project involved designing a robust and fair train-test split strategy to evaluate the Naive Bayes classifiers. I used two common split ratios: **70/30** and **80/20**, to examine how different proportions of training data affect performance. This helped ensure that the models were tested on completely unseen data, simulating real-world deployment scenarios.
@@ -996,7 +996,7 @@ if section == "Naive Bayes":
     """)
 
     st.markdown("""
-    **✅ Practical Fix Applied:**
+    **Practical Fix Applied:**
 
     To address this issue, I applied a **class frequency filter** and **excluded all classes with fewer than two samples** from the dataset. This step was essential to:
 
@@ -1008,7 +1008,7 @@ if section == "Naive Bayes":
     """)
 
     st.markdown("""
-    **🔍 Why This Matters:**
+    ** Why This Matters:**
 
     Disjoint splits are essential to prevent **data leakage**, which would give the model access to information from the test set during training, resulting in artificially high performance. By ensuring complete separation of train and test sets, and maintaining class distribution wherever possible, the evaluation becomes a reliable indicator of generalization performance.
 
@@ -1016,7 +1016,7 @@ if section == "Naive Bayes":
     """)
 
     st.markdown("""
-    ### 🏁 Final Conclusion
+    ### Final Conclusion
 
     Naive Bayes classifiers are **efficient, interpretable, and easy to implement**, but this project demonstrated their **limitations on imbalanced datasets**.  
     Despite high accuracy, the models completely **ignored minority classes**, making them unsuitable for real-world use in this context.  
@@ -1031,10 +1031,10 @@ if section == "Naive Bayes":
 
 # Section: Decision Tree
 elif section == "Decision Tree":
-    st.header("🌳 Decision Tree Classifier")
+    st.header("Decision Tree Classifier")
     st.write("This section will include training, visualization, and evaluation of a Decision Tree model.")
     # Placeholder for future code
-    st.subheader("📘 Overview: What are Decision Trees (DTs)?")
+    st.subheader("Overview: What are Decision Trees (DTs)?")
 
     st.markdown("""
     A **Decision Tree** is a popular and intuitive supervised machine learning algorithm used for both **classification** and **regression** tasks. It models decisions as a series of branching splits based on feature values, forming a **tree-like structure** that is easy to understand and visualize.
@@ -1049,20 +1049,20 @@ elif section == "Decision Tree":
     """)
 
     st.markdown("""
-    ### 📌 Uses of Decision Trees
+    ### Uses of Decision Trees
 
     Decision Trees are widely used in a range of real-world scenarios due to their flexibility and interpretability. Common use cases include:
 
-    - ✅ **Classification**: Spam filtering, medical diagnosis, fraud detection, customer churn prediction  
-    - ✅ **Regression**: House price prediction, sales forecasting, temperature modeling  
-    - ✅ **Feature selection**: Identifying the most important predictors in a dataset  
-    - ✅ **Decision support systems**: Simulating human-like decision-making in areas like credit scoring or loan approval
+    - **Classification**: Spam filtering, medical diagnosis, fraud detection, customer churn prediction  
+    - **Regression**: House price prediction, sales forecasting, temperature modeling  
+    - **Feature selection**: Identifying the most important predictors in a dataset  
+    - **Decision support systems**: Simulating human-like decision-making in areas like credit scoring or loan approval
 
     They also serve as the foundation for more powerful ensemble methods like **Random Forests** and **Gradient Boosting Machines (GBM)**.
     """)
 
     st.markdown("""
-    ### 📊 GINI, Entropy, and Information Gain
+    ### GINI, Entropy, and Information Gain
 
     At the heart of decision tree construction is the task of deciding **which feature to split on at each node**. This is guided by mathematical measures that evaluate how "pure" or "informative" each split is. The three most common metrics are:
 
@@ -1080,7 +1080,7 @@ elif section == "Decision Tree":
     **GINI = 1 − ∑(pᵢ²)**
 
     Where `pᵢ` is the probability of class *i* in the node.  
-    ➡️ A **lower GINI** value means the node is purer (mostly one class), and is generally preferred when building classification trees.
+    ➡ A **lower GINI** value means the node is purer (mostly one class), and is generally preferred when building classification trees.
 
     GINI is often used in **CART (Classification and Regression Trees)** algorithms and is computationally efficient.
     """)
@@ -1093,7 +1093,7 @@ elif section == "Decision Tree":
     **Formula**:  
     **Entropy = − ∑(pᵢ * log₂(pᵢ))**
 
-    ➡️ Entropy is **0** when all samples belong to one class (pure node), and is **higher** when classes are evenly mixed.
+    ➡ Entropy is **0** when all samples belong to one class (pure node), and is **higher** when classes are evenly mixed.
 
     It's slightly more computationally expensive than GINI, but provides a probabilistic interpretation of impurity.
     """)
@@ -1106,13 +1106,13 @@ elif section == "Decision Tree":
     **Formula**:  
     **Information Gain = Entropy(parent) − Weighted Avg. Entropy(children)**
 
-    ➡️ A higher Information Gain indicates a more meaningful split that leads to better learning.
+    ➡A higher Information Gain indicates a more meaningful split that leads to better learning.
 
     Entropy and IG are used in **ID3** and **C4.5** decision tree algorithms.
     """)
 
     st.markdown("""
-    ### 🧮 Small Example (Entropy & Information Gain)
+    ### Small Example (Entropy & Information Gain)
 
     Suppose we have a toy dataset with a binary classification target (Play Tennis):
 
@@ -1145,11 +1145,11 @@ elif section == "Decision Tree":
 
     **IG(Weather) = 0.971 − 0 = 0.971**
 
-    ✅ Splitting on "Weather" results in **perfectly pure nodes**, which makes it an ideal feature for the root split in this case.
+     Splitting on "Weather" results in **perfectly pure nodes**, which makes it an ideal feature for the root split in this case.
     """)
 
     st.markdown("""
-    ### ❓ Why Are GINI, Entropy, and IG Used?
+    ### Why Are GINI, Entropy, and IG Used?
 
     - **GINI** and **Entropy** measure how "impure" a node is — lower values indicate better splits.  
     - **Information Gain** quantifies how much purity increases after a split — higher is better.
@@ -1160,7 +1160,7 @@ elif section == "Decision Tree":
     """)
 
     st.markdown("""
-    ### 🌳 Why Is It Possible to Create an Infinite Number of Trees?
+    ### Why Is It Possible to Create an Infinite Number of Trees?
 
     It’s possible to generate infinitely many decision trees for a given dataset because of:
 
@@ -1168,7 +1168,7 @@ elif section == "Decision Tree":
     - **Feature combinations**: Different features can be combined or used in different orders.  
     - **Unlimited depth**: A tree can continue to split until each sample is isolated (overfitting).
 
-    📌 To manage complexity and avoid overfitting, real-world implementations use constraints such as:
+    To manage complexity and avoid overfitting, real-world implementations use constraints such as:
 
     - `max_depth`  
     - `min_samples_split`  
@@ -1219,7 +1219,7 @@ elif section == "Decision Tree":
         These practices form the foundation of trustworthy model validation and are especially important when deploying predictive models for scientific or policy-related applications like sea-level monitoring.
         """)
     with st.expander("Dataset images"):
-            # st.image('dataset_image.jpeg', caption="Dataset Before Cleaning")
+            st.image('dataset_image.jpeg', caption="Dataset Before Cleaning")
         
             st.write("""
         After cleaning and transforming the data, the dataset is structured in a way that it can now be used for NB. Below is the cleaned version of the dataset:
@@ -1246,7 +1246,7 @@ elif section == "Decision Tree":
         Therefore, **confusion matrices and accuracy percentages are not applicable** to this type of task.
 
         ---
-        ### 🧮 What We Use Instead:
+        ### What We Use Instead:
 
         In regression problems, performance is typically evaluated using **error-based metrics** that capture how close predictions are to actual values:
 
@@ -1257,7 +1257,7 @@ elif section == "Decision Tree":
         These metrics provide a much more accurate and relevant understanding of a regression model’s predictive performance.
 
         ---
-        ### 🔍 What About Correlation?
+        ### What About Correlation?
 
         While a **correlation matrix** can highlight linear relationships between features and the target variable, it does **not evaluate model performance**. Correlation is used during **exploratory data analysis** to select useful predictors, but it's not a substitute for metrics like RMSE or R² in regression evaluation.
          """)
@@ -1437,7 +1437,12 @@ elif section == "Regression":
 
         selected_image = st.selectbox("Select a split to view the corresponding data table:", list(split_images.keys()))
         st.image(split_images[selected_image], use_column_width=True)
-
+    with st.expander("Link to the dataset"):
+        st.markdown("[Click here to view the dataset](https://github.com/VarunnReddyy/sea_level_rise/blob/main/station%201611400dataaset.csv)")    
+    with st.expander("Link to Regression Notebook"):
+        st.write("You can view the full Regression in the following notebook:")
+        st.markdown("[Click here to view the notebook](https://colab.research.google.com/drive/1APMzmARJtt8rquSqwbsVh68xJZ_CW_ZE?usp=sharing)")
+    
 
     st.subheader("Results Analysis")
 
