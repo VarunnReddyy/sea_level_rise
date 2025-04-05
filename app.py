@@ -83,6 +83,18 @@ if section == "Introduction":
     collapsible_section("Why is this analysis important?", """
     This sea level monitoring project is crucial for addressing the increasing risks associated with climate change and rising sea levels. By focusing on accurately predicting sea level rise, the project provides insights that can help communities prepare for and adapt to future coastal changes. The dataset’s attributes, which include specific metrics like the highest and lowest recorded water levels, mean sea levels, and detailed tidal measurements, offer a robust foundation for analyzing trends over time. This information is vital for local and national governments, as it allows for better planning around coastal infrastructure, reducing the potential economic burden of unexpected flooding or erosion. High water levels, for instance, provide critical data for forecasting extreme events, such as storm surges, that pose immediate risks to vulnerable communities. Attributes like MSL and MHHW help pinpoint gradual trends in rising water levels, which is essential for understanding the long-term impact on freshwater supplies, ecosystems, and biodiversity. The project also sheds light on the frequency and severity of low tides, important for maritime navigation and ecosystem health. Predicting sea level rise is not only an environmental issue but also a socio-economic one, as it influences housing, insurance costs, and public safety. Ultimately, the data gathered here supports proactive, data-driven decisions that can help mitigate the impacts of rising seas on society.
     """)
+    collapsible_section("The Global Scope of Sea Level Rise", """
+    Sea level rise is not a localized issue—it is a global phenomenon affecting coastlines on every continent. From the Pacific islands to the eastern seaboard of the United States, communities are already experiencing its consequences. Small island nations face the risk of losing land entirely, while megacities like Mumbai, New York, and Jakarta are investing billions to counteract its effects. Understanding sea level trends on both local and global scales is essential for developing adaptive strategies tailored to each region’s specific vulnerabilities.
+    """)
+    
+    collapsible_section("Data-Driven Policy and Planning", """
+    With sea levels rising at an accelerated pace, data-driven decision-making becomes not just beneficial, but essential. Governments, city planners, and environmental agencies depend on accurate data to design infrastructure that can withstand future conditions. By analyzing trends and patterns in sea level changes, we can better predict storm surge intensities, inform zoning laws, and prioritize climate resilience investments. This project serves as a foundational tool for integrating science into strategic policy-making.
+    """)
+    
+    collapsible_section("The Role of Machine Learning in Climate Analysis", """
+    As climate data grows in volume and complexity, traditional analysis methods are no longer sufficient. Machine learning offers a scalable solution, allowing us to uncover hidden patterns and build predictive models that adapt to real-world dynamics. In this project, we leverage machine learning not just for forecasting, but for making sense of the intricate relationships among tidal levels, weather patterns, and temporal trends. This approach enables more accurate insights and reinforces the importance of AI in addressing environmental challenges.
+    """)
+
     
 
     collapsible_section("Why This Matters", """
