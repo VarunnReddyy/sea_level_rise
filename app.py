@@ -60,7 +60,7 @@ def collapsible_section(title, content):
 
 # Sidebar for Navigation
 st.sidebar.title("Navigation")
-section = st.sidebar.selectbox("Select a Section", ["Introduction", "Data Collection and Cleaning", "Data Visualizations","PCA","Clustering","ARM", "Models Implemented", "Conclusion"], key="nav")
+section = st.sidebar.selectbox("Select a Section", ["Introduction", "Data Collection and Cleaning", "Data Visualizations","PCA","Clustering","ARM", "Naive Bayes", "Decision Tree", "Regression", "Conclusion"], key="nav")
 
 # Title of the web app
 st.title("Data Science Project")
@@ -800,6 +800,800 @@ if section == "ARM":
     
     While ARM helped uncover certain relationships between the variables, the findings suggest that further analysis using other methods such as clustering or correlation analysis might offer deeper insights. ARM's strength lies in uncovering frequent patterns, but its application is most effective when used alongside other techniques to provide a more comprehensive understanding of complex phenomena like sea level rise.
     """)
+
+# Section: Naive Bayes
+if section == "Naive Bayes":
+    st.header("🧪 Naive Bayes Classifier")
+    st.write("This section will showcase how the Naive Bayes algorithm works on our dataset.")
+    # Placeholder for future code
+    st.markdown("""
+        📘 **Overview: What is Naive Bayes?**
+
+        Naive Bayes (NB) is a family of simple yet powerful probabilistic classifiers based on **Bayes’ Theorem**, which calculates the probability of a class given the presence of certain features. What makes it “naive” is the strong assumption that all input features are **independent** of each other given the class label — an assumption that rarely holds in practice, yet the model still performs remarkably well in many real-world tasks.
+
+        There are several types of Naive Bayes models, depending on the nature of your data:
+        - **GaussianNB**: GaussianNB is used when the features are continuous numerical values and are assumed to follow a normal (Gaussian) distribution. It calculates the mean and variance of each feature per class and uses that to compute probabilities. This model is suitable for applications like medical diagnosis, weather forecasting, or any scenario where input features like age, temperature, or heart rate are continuous in nature. It's also helpful when you need quick results without heavy tuning, and when the assumption of normality is reasonable.
+        - **MultinomialNB**: MultinomialNB is ideal for discrete count data, such as word frequencies in documents. It works by calculating the likelihood of features (like word counts) based on how often they appear in each class during training. This model is commonly used in text classification, spam filtering, and sentiment analysis, where features represent how many times a certain word or token appears in a message or document. Since it requires non-negative integers, it’s best suited for bag-of-words models or count-based vectorizations..
+        - **BernoulliNB**: BernoulliNB is tailored for binary (0 or 1) features, meaning it focuses on the presence or absence of a feature rather than how often it appears. It assumes that each feature is a binary indicator, making it suitable for situations like document classification, where you care whether a certain keyword is present in the text — not how many times it appears. This model is also used in click prediction systems and basic recommendation engines..
+        - **CategoricalNB**: CategoricalNB is a newer addition that handles categorical features with discrete, labeled values — such as colors, product categories, or geographic regions. It differs from MultinomialNB in that it doesn't expect numeric counts, just distinct category labels. This makes it extremely useful for survey analysis, demographic prediction, or any structured dataset where features take on a finite number of categories (like education level or job sector).
+
+        Scikit-learn offers these Naive Bayes variants to suit different data types:
+
+        - **Multinomial Naive Bayes (MultinomialNB)** is best for discrete count data, such as word frequencies in text classification. It works well for spam detection, topic classification, and sentiment analysis where features are non-negative integers.
+
+        - **Gaussian Naive Bayes (GaussianNB)** is tailored for continuous, real-valued data that follows a Gaussian distribution — commonly used in fields like medicine, meteorology, and sensor analytics.
+
+        - **Bernoulli Naive Bayes (BernoulliNB)** is ideal for binary (0 or 1) features — like word presence or absence — and is used in tasks like document classification or click prediction.
+
+        - **Categorical Naive Bayes (CategoricalNB)** is suited for features with categorical (non-numeric) values, such as colors or regions, making it great for survey data or structured inputs with defined categories.
+
+        **Why Smooting is required for NB models?**
+                                
+        Smoothing is required in Naïve Bayes models to handle the issue of zero probabilities that can arise when a particular feature value does not occur in the training data for a given class. Without smoothing, the presence of such a zero probability would cause the entire product of probabilities (used in Bayes’ Theorem) to become zero, effectively nullifying the model’s ability to predict that class. Smoothing, typically applied through Laplace (additive) smoothing, assigns a small non-zero probability to all possible feature values, ensuring the model remains robust and can generalize better to unseen data. This regularization helps prevent overfitting and improves performance, especially in datasets with sparse or imbalanced class distributions.
+                                                        
+        **🔍 Summary Comparison:**
+
+        | Model          | Data Type           | Feature Example            | Use Case Example                     |
+        |----------------|---------------------|-----------------------------|--------------------------------------|
+        | GaussianNB     | Continuous (real)   | Age, weight, income         | Medical data, sensor readings        |
+        | MultinomialNB  | Discrete counts     | Word counts, hashtag counts| Text classification, spam filter     |
+        | BernoulliNB    | Binary (0/1)        | Word presence (yes/no)     | Sentiment tagging, click prediction  |
+        | CategoricalNB  | Categorical (labels)| Colors, states, countries  | Survey analysis, categorical datasets|
+
+        Naive Bayes remains a go-to algorithm when speed, scalability, and interpretability matter — especially when you're working with high-dimensional data or need a solid baseline for classification tasks.
+        """)
+
+    st.image("nbimage.webp", caption="Sample NB Image", use_column_width=True)
+    st.image("nbimage1.webp", caption="Sample NB Image", use_column_width=True)
+
+
+    with st.expander("🧹 Data Preparation for Naïve Bayes Analysis"):
+        st.markdown("""
+        To conduct supervised learning using Naïve Bayes models, the dataset must first be labeled — in this case, the **Inf** column serves as the target variable. As is standard in supervised machine learning, the dataset is split into **training and testing sets**. The training set is used to build and fit the model, while the testing set evaluates how well the model generalizes to unseen data. These sets are kept **disjoint** (i.e., non-overlapping) to prevent data leakage and ensure valid evaluation.
+
+        The dataset used here is from **station 1611400**, and necessary data cleaning was performed — including handling missing values, combining date and time columns, and dropping irrelevant or constant features.
+        """)
+
+        st.markdown("---")
+        st.markdown("### 🧪 Multinomial Naïve Bayes (MultinomialNB)")
+        st.markdown("""
+        - **Data Format**: Discretized numerical features using `KBinsDiscretizer` (count-based bins).
+        - **Why**: MultinomialNB expects non-negative, count-based inputs (similar to word counts).
+        - **Train/Test Splits**: Both **70/30** and **80/20** using `train_test_split()`.
+        """)
+        st.markdown("🖼️ *Preview of Binned Features (X_binned):*")
+        st.image("Multinomialx_binned.png", caption="Discretized X_binned Sample", use_column_width=True)
+
+        st.markdown("---")
+        st.markdown("### 🧪 Bernoulli Naïve Bayes (BernoulliNB)")
+        st.markdown("""
+        - **Data Format**: Binarized features using `Binarizer(threshold=0.5)`.
+        - **Why**: BernoulliNB is designed for binary data (0 or 1), such as feature presence/absence.
+        - **Train/Test Splits**: 70/30 and 80/20 splits using `stratify=y` for class balance.
+        """)
+        st.markdown("🖼️ *Preview of Binary Features (X_binary):*")
+        st.image("Bernoullix_binary.png", caption="Binarized Feature Sample", use_column_width=True)
+
+        st.markdown("---")
+        st.markdown("### 🧪 Gaussian Naïve Bayes (GaussianNB)")
+        st.markdown("""
+        - **Data Format**: Continuous real-valued features, scaled using `MinMaxScaler`.
+        - **Why**: GaussianNB assumes a normal distribution across continuous numeric features.
+        - **Dimensionality Reduction**: Applied **PCA** to reduce dimensions while retaining 95% variance.
+        - **Train/Test Splits**: Conducted both **70/30** and **80/20** on PCA-transformed data.
+        """)
+        st.markdown("🖼️ *Snippet of PCA-Reduced Data:*")
+        st.image("pca_reduced_gaussian.png", caption="PCA-Transformed Dataset Sample", use_column_width=True)
+
+        st.markdown("---")
+        st.markdown("### ✅ Why Disjoint Sets Matter")
+        st.markdown("""
+        Training and testing sets must be disjoint to prevent contamination. If a model is tested on samples it saw during training, it gives inflated performance metrics. Disjoint splits ensure **realistic evaluation**, helping build models that generalize well to unseen data in the real world.
+        """)
+    with st.expander("Link to the dataset"):
+        st.markdown("[Click here to view the dataset](https://github.com/VarunnReddyy/sea_level_rise/blob/main/station%201611400dataaset.csv)")    
+    with st.expander("Link to NB Notebook"):
+        st.write("You can view the full NB in the following notebook:")
+        st.markdown("[Click here to view the notebook](https://colab.research.google.com/drive/1s2iiOpYenTqTchKfEQpfw6L4_wy2e2AM?usp=sharing)")
+    
+    
+    with st.expander("Dataset images"):
+        # st.image('dataset_image.jpeg', caption="Dataset Before Cleaning")
+    
+        st.write("""
+    After cleaning and transforming the data, the dataset is structured in a way that it can now be used for NB. Below is the cleaned version of the dataset:
+        """)
+    
+    # Display Image: Dataset After Cleaning
+        # st.image('cleaned_arm.png', caption="Dataset After Cleaning")
+    st.subheader("🖼️ Naive Bayes Results & Visualizations")
+
+    nb_tabs = [
+        "MultinomialNB - Confusion Matrix",
+        "BernoulliNB - ROC Curve",
+        "GaussianNB - Accuracy Comparison",
+        "All NB Models - Precision/Recall",
+        "PCA Plot for GaussianNB"
+    ]
+
+    selected_nb_tab = st.selectbox("Select a visualization to view:", nb_tabs)
+
+    nb_image_paths = {
+        "MultinomialNB - Confusion Matrix": "nb_multinomial_conf_matrix.png",
+        "BernoulliNB - ROC Curve": "nb_bernoulli_roc.png",
+        "GaussianNB - Accuracy Comparison": "nb_gaussian_accuracy.png",
+        "All NB Models - Precision/Recall": "nb_models_precision_recall.png",
+        "PCA Plot for GaussianNB": "nb_gaussian_pca_plot.png"
+    }
+
+    if selected_nb_tab in nb_image_paths:
+        image_path = nb_image_paths[selected_nb_tab]
+        try:
+            st.image(image_path, caption=selected_nb_tab, use_column_width=True)
+        except Exception as e:
+            st.warning(f"Couldn't load the image: {image_path}")
+    st.subheader("🧾 Summary and Final Results – Naive Bayes on Imbalanced Dataset")
+
+    st.markdown("""
+    ### 🔧 Summary of Implementation
+
+    In this project, I implemented and evaluated three variants of the Naive Bayes classification algorithm using the station 1611400 dataset:
+
+    - **Multinomial Naive Bayes (MultinomialNB)** using discretized features  
+    - **Bernoulli Naive Bayes (BernoulliNB)** using binary features  
+    - **Gaussian Naive Bayes (GaussianNB)** using scaled continuous features and PCA
+
+    Each model was trained and tested using both **80/20** and **70/30** disjoint splits, and evaluated using **accuracy**, **confusion matrices**, and **classification reports**. Regularization was applied by tuning the **alpha** parameter for Bernoulli and Multinomial variants (ranging from 0.01 to 10.0). Dimensionality reduction (**PCA**) and feature selection (**SelectKBest**) were also used to explore overfitting control and model performance.
+    """)
+
+    st.markdown("""
+    ### 📊 Observed Performance
+
+    - All models consistently achieved **very high accuracy (~99%)**, regardless of the split ratio or regularization.  
+    - However, the **classification reports revealed a critical flaw**: the models failed to identify any **minority class samples**. Precision, recall, and F1-score for these classes were all **0.00**.
+    - **Smoothing had no meaningful impact**, and even with alpha tuning, models continued to predict only the majority class (class 0).
+    - **PCA helped reduce dimensionality** for GaussianNB, but the performance issue persisted.
+    """)
+
+    st.markdown("""
+    ### 🧮 Confusion Matrix and Accuracy Insights
+
+    The confusion matrix highlights the model's bias:
+
+    - All **244 instances** of the majority class (0) were predicted correctly.  
+    - **None of the minority class instances** (such as class 1, 4, or 11) were predicted correctly — they were all misclassified as class 0.  
+    - This resulted in an overall **accuracy of 98.79%**, but a **macro-averaged F1-score of only 0.33**, showing that the model completely failed on underrepresented classes.
+    """)
+
+    st.markdown("""
+    ### 💡 What I Learned from the Results
+
+    From this analysis, I learned that **Naive Bayes classifiers can produce misleading results** when used on highly imbalanced datasets.  
+    - **High accuracy alone does not reflect model quality** in such cases.  
+    - It is essential to evaluate models using **precision, recall, and F1-score** to understand class-wise behavior.  
+    - I also learned that **smoothing**, while helpful in theory, does not compensate for **severe imbalance issues**.
+
+    This project reinforced the importance of preparing data according to the model’s assumptions:
+    - Discretization for MultinomialNB
+    - Binarization for BernoulliNB
+    - Scaling for GaussianNB
+
+    However, it also made clear that **Naive Bayes is not suitable for this particular dataset**, and that models with built-in class handling, such as **logistic regression with class weights** or **tree-based models**, would be more appropriate.
+    """)
+
+    st.markdown("### 🧪 Train-Test Split Justification (Based on Actual Results)")
+
+    st.markdown("""
+    A crucial part of this project involved designing a robust and fair train-test split strategy to evaluate the Naive Bayes classifiers. I used two common split ratios: **70/30** and **80/20**, to examine how different proportions of training data affect performance. This helped ensure that the models were tested on completely unseen data, simulating real-world deployment scenarios.
+
+    To maintain class balance across splits, I attempted to use `stratify=y` during the splitting process. Stratified sampling is especially important for imbalanced datasets like the one in this project, where the **Inf** column is overwhelmingly dominated by **class 0 (98.8%)**, while other classes like **1, 4, and 11** occur extremely infrequently.
+
+    However, this approach led to an error:
+
+    > “The least populated class in y has only 1 member, which is too few...”
+
+    This is a known limitation when using stratified splitting with classes that contain only one sample. In such cases, the algorithm cannot guarantee that both the training and test sets will include at least one sample from that class, leading to an invalid split.
+    """)
+
+    st.markdown("""
+    **✅ Practical Fix Applied:**
+
+    To address this issue, I applied a **class frequency filter** and **excluded all classes with fewer than two samples** from the dataset. This step was essential to:
+
+    - Ensure stable, error-free splits.  
+    - Avoid evaluating on classes the model could never properly learn.  
+    - Prevent the evaluation from being skewed by noise-like singleton samples.
+
+    After this filtering step, I successfully applied **stratified splits** and ensured that every remaining class was represented in both the training and testing sets.
+    """)
+
+    st.markdown("""
+    **🔍 Why This Matters:**
+
+    Disjoint splits are essential to prevent **data leakage**, which would give the model access to information from the test set during training, resulting in artificially high performance. By ensuring complete separation of train and test sets, and maintaining class distribution wherever possible, the evaluation becomes a reliable indicator of generalization performance.
+
+    Despite these precautions, the models — especially **MultinomialNB** and **BernoulliNB** — still failed to detect **minority classes** even after smoothing and dimensionality reduction. This shows that while a proper train-test split is foundational, it cannot by itself solve the deeper issue of **class imbalance**. However, by carefully splitting and cleaning the dataset, I was able to isolate and highlight this limitation in Naive Bayes models with confidence.
+    """)
+
+    st.markdown("""
+    ### 🏁 Final Conclusion
+
+    Naive Bayes classifiers are **efficient, interpretable, and easy to implement**, but this project demonstrated their **limitations on imbalanced datasets**.  
+    Despite high accuracy, the models completely **ignored minority classes**, making them unsuitable for real-world use in this context.  
+    The assumption of feature independence and balanced class distribution does not hold for this dataset, and even techniques like **smoothing and PCA** failed to overcome this issue.
+
+    Although all three Naive Bayes models were implemented successfully as required, **they are not recommended for deployment**.  
+    More suitable approaches include:
+    - **Class-weighted algorithms**
+    - **Resampling techniques like SMOTE**  
+    to better handle imbalanced data.
+    """)
+
+# Section: Decision Tree
+elif section == "Decision Tree":
+    st.header("🌳 Decision Tree Classifier")
+    st.write("This section will include training, visualization, and evaluation of a Decision Tree model.")
+    # Placeholder for future code
+    st.subheader("📘 Overview: What are Decision Trees (DTs)?")
+
+    st.markdown("""
+    A **Decision Tree** is a popular and intuitive supervised machine learning algorithm used for both **classification** and **regression** tasks. It models decisions as a series of branching splits based on feature values, forming a **tree-like structure** that is easy to understand and visualize.
+
+    A decision tree consists of three key elements:
+
+    - **Root node**: The starting point of the tree that performs the first and most significant split based on a specific feature.  
+    - **Internal nodes**: These represent decision points where the data is further divided based on other features.  
+    - **Leaf nodes**: The endpoints of the tree that hold the final predicted value or class label.
+
+    Because of its clear flow of logic, a decision tree is highly interpretable and often used in domains that require **explainability**, such as healthcare, finance, and education. It also handles both **numerical and categorical** data with minimal preprocessing.
+    """)
+
+    st.markdown("""
+    ### 📌 Uses of Decision Trees
+
+    Decision Trees are widely used in a range of real-world scenarios due to their flexibility and interpretability. Common use cases include:
+
+    - ✅ **Classification**: Spam filtering, medical diagnosis, fraud detection, customer churn prediction  
+    - ✅ **Regression**: House price prediction, sales forecasting, temperature modeling  
+    - ✅ **Feature selection**: Identifying the most important predictors in a dataset  
+    - ✅ **Decision support systems**: Simulating human-like decision-making in areas like credit scoring or loan approval
+
+    They also serve as the foundation for more powerful ensemble methods like **Random Forests** and **Gradient Boosting Machines (GBM)**.
+    """)
+
+    st.markdown("""
+    ### 📊 GINI, Entropy, and Information Gain
+
+    At the heart of decision tree construction is the task of deciding **which feature to split on at each node**. This is guided by mathematical measures that evaluate how "pure" or "informative" each split is. The three most common metrics are:
+
+    - **GINI Impurity**
+    - **Entropy**
+    - **Information Gain**
+    """)
+
+    st.markdown("""
+    #### 1. GINI Impurity
+
+    **GINI impurity** measures the likelihood of an incorrect classification if a sample is randomly labeled according to the distribution of class labels at a node.
+
+    **Formula**:  
+    **GINI = 1 − ∑(pᵢ²)**
+
+    Where `pᵢ` is the probability of class *i* in the node.  
+    ➡️ A **lower GINI** value means the node is purer (mostly one class), and is generally preferred when building classification trees.
+
+    GINI is often used in **CART (Classification and Regression Trees)** algorithms and is computationally efficient.
+    """)
+
+    st.markdown("""
+    #### 2. Entropy
+
+    **Entropy** measures the disorder or unpredictability in the dataset. It comes from information theory and helps us understand how mixed a node is.
+
+    **Formula**:  
+    **Entropy = − ∑(pᵢ * log₂(pᵢ))**
+
+    ➡️ Entropy is **0** when all samples belong to one class (pure node), and is **higher** when classes are evenly mixed.
+
+    It's slightly more computationally expensive than GINI, but provides a probabilistic interpretation of impurity.
+    """)
+
+    st.markdown("""
+    #### 3. Information Gain (IG)
+
+    **Information Gain** measures how much **uncertainty (entropy)** is reduced after a split. It's the **difference between the parent node’s entropy and the weighted average entropy of the child nodes**.
+
+    **Formula**:  
+    **Information Gain = Entropy(parent) − Weighted Avg. Entropy(children)**
+
+    ➡️ A higher Information Gain indicates a more meaningful split that leads to better learning.
+
+    Entropy and IG are used in **ID3** and **C4.5** decision tree algorithms.
+    """)
+
+    st.markdown("""
+    ### 🧮 Small Example (Entropy & Information Gain)
+
+    Suppose we have a toy dataset with a binary classification target (Play Tennis):
+
+    | Weather   | Play Tennis |
+    |-----------|-------------|
+    | Sunny     | No          |
+    | Sunny     | No          |
+    | Overcast  | Yes         |
+    | Rainy     | Yes         |
+    | Rainy     | Yes         |
+
+    ---
+
+    **Step 1: Compute Parent Entropy**  
+    Total observations = 5 (2 No, 3 Yes)
+
+    **Entropy(Parent) = − (3/5 * log₂(3/5) + 2/5 * log₂(2/5)) ≈ 0.971**
+
+    **Step 2: Compute Child Entropies**
+
+    - Sunny: 2 samples (2 No) → Entropy = 0  
+    - Overcast: 1 sample (1 Yes) → Entropy = 0  
+    - Rainy: 2 samples (2 Yes) → Entropy = 0  
+
+    **Step 3: Weighted Average Entropy**
+
+    **= (2/5)*0 + (1/5)*0 + (2/5)*0 = 0**
+
+    **Step 4: Information Gain**
+
+    **IG(Weather) = 0.971 − 0 = 0.971**
+
+    ✅ Splitting on "Weather" results in **perfectly pure nodes**, which makes it an ideal feature for the root split in this case.
+    """)
+
+    st.markdown("""
+    ### ❓ Why Are GINI, Entropy, and IG Used?
+
+    - **GINI** and **Entropy** measure how "impure" a node is — lower values indicate better splits.  
+    - **Information Gain** quantifies how much purity increases after a split — higher is better.
+
+    These metrics provide a systematic way for the decision tree algorithm to choose features that improve prediction power.  
+    - GINI is faster and is typically used in scikit-learn by default.  
+    - Entropy and IG may offer more interpretability or precision in certain datasets.
+    """)
+
+    st.markdown("""
+    ### 🌳 Why Is It Possible to Create an Infinite Number of Trees?
+
+    It’s possible to generate infinitely many decision trees for a given dataset because of:
+
+    - **Continuous features**: Can be split at infinitely many thresholds.  
+    - **Feature combinations**: Different features can be combined or used in different orders.  
+    - **Unlimited depth**: A tree can continue to split until each sample is isolated (overfitting).
+
+    📌 To manage complexity and avoid overfitting, real-world implementations use constraints such as:
+
+    - `max_depth`  
+    - `min_samples_split`  
+    - `min_samples_leaf`  
+    - **Pruning methods**
+
+    These help keep the tree **efficient, generalizable**, and **interpretable**.
+    """)
+    with st.expander("Data Preparation for Decision Tree Modeling"):
+        st.markdown("""
+        ### Data Cleaning and Feature Selection
+
+        The original dataset included a wide range of sea-level-related metrics, such as tidal measurements and extreme water level values, along with some auxiliary columns like `Date`, `Time (GMT)`, and `Inf`. While these columns were useful for exploratory analysis or visualizations, they were not directly beneficial for training a predictive model focused on estimating **Mean Sea Level (MSL)**.
+
+        For the purpose of building a robust Decision Tree regression model, we performed an initial cleaning process that involved removing:
+
+        - **Non-numeric features**: Columns like `Date` and `Time (GMT)` were excluded, as they do not directly contribute as numerical predictors unless transformed appropriately (e.g., datetime encoding).
+        - **Label or target-related fields**: The `Inf` column, typically used for labeling in classification tasks, was also dropped, since our current goal was to perform **regression** on the `MSL` column.
+        - **Constant or irrelevant columns**: Any columns showing little to no variance or serving as metadata were discarded to reduce noise and prevent overfitting.
+
+        This streamlined the dataset to only include meaningful, numeric, and varying predictors that contribute to modeling Mean Sea Level.
+
+        ---
+
+        ### Splitting the Dataset into Training and Testing Sets
+
+        Once the dataset was cleaned, we prepared it for supervised learning by dividing it into separate training and testing sets. Two different split ratios were used to evaluate the consistency and robustness of the model across different training data sizes:
+
+        - **80% training / 20% testing split**
+        - **70% training / 30% testing split**
+
+        The splitting was done using a **random but reproducible** method (via fixed random seeds) to ensure that the results were consistent across multiple runs. The **training set** was used to teach the model the relationship between input features and the target variable (`MSL`), while the **testing set** remained untouched during training and was used solely for performance evaluation.
+
+        By comparing results across both splits, we could assess the model’s sensitivity to training data volume and ensure that performance wasn’t heavily dependent on a particular data partition.
+
+        ---
+
+        ### Importance of Disjoint Sets
+
+        Maintaining strict separation between training and testing datasets is critical to prevent **data leakage** — a situation where the model inadvertently gains access to information from the test set during training. This would artificially inflate evaluation metrics and fail to reflect the model’s actual performance on new, unseen data.
+
+        Disjoint (non-overlapping) datasets ensure that:
+
+        - **The model is evaluated honestly**, without prior exposure to the test data.
+        - **Generalization ability** is measured correctly, helping understand how well the model would perform in real-world settings.
+        - **Bias and variance** are correctly diagnosed, leading to better tuning and future improvements.
+
+        These practices form the foundation of trustworthy model validation and are especially important when deploying predictive models for scientific or policy-related applications like sea-level monitoring.
+        """)
+    with st.expander("Dataset images"):
+            # st.image('dataset_image.jpeg', caption="Dataset Before Cleaning")
+        
+            st.write("""
+        After cleaning and transforming the data, the dataset is structured in a way that it can now be used for NB. Below is the cleaned version of the dataset:
+            """)
+        
+        # Display Image: Dataset After Cleaning
+            st.image('cleaned_dt.png', caption="Dataset After Cleaning")
+
+    with st.expander("Link to Decision Tess Notebook"):
+        st.write("You can view the full Decision Tree Notebook in the following notebook:")
+        st.markdown("[Click here to view the notebook](https://colab.research.google.com/drive/1tq6ExGYsygHeR0SEupHpgwimWQWavFpw?usp=sharing)")
+    with st.expander("Why Can't We Generate a Confusion Matrix or Accuracy?"):
+        st.markdown("""
+        A **confusion matrix** and **accuracy score** are metrics specifically designed for **classification tasks**, where the objective is to predict **discrete class labels** (e.g., "spam" vs. "not spam", or "low", "medium", "high"). These metrics provide a count of true positives, false positives, true negatives, and false negatives, allowing us to calculate how often the model is classifying labels correctly.
+
+        However, in this case, we are using **Decision Trees for a regression problem**, where the model's goal is to predict a **continuous numerical value** — specifically, the **Mean Sea Level (MSL)**.
+
+        In regression:
+        
+        - Predictions are numeric and continuous.
+        - There's no concept of discrete categories to classify.
+        - It's not meaningful to count predictions as simply "correct" or "incorrect" like in classification.
+
+        Therefore, **confusion matrices and accuracy percentages are not applicable** to this type of task.
+
+        ---
+        ### 🧮 What We Use Instead:
+
+        In regression problems, performance is typically evaluated using **error-based metrics** that capture how close predictions are to actual values:
+
+        - **Mean Squared Error (MSE)**: Measures the average squared difference between actual and predicted values.
+        - **Root Mean Squared Error (RMSE)**: The square root of MSE, providing errors in the same unit as the target variable.
+        - **R-squared (R²)**: Explains the proportion of variance in the dependent variable that is predictable from the independent variables. An R² closer to 1 indicates better fit.
+
+        These metrics provide a much more accurate and relevant understanding of a regression model’s predictive performance.
+
+        ---
+        ### 🔍 What About Correlation?
+
+        While a **correlation matrix** can highlight linear relationships between features and the target variable, it does **not evaluate model performance**. Correlation is used during **exploratory data analysis** to select useful predictors, but it's not a substitute for metrics like RMSE or R² in regression evaluation.
+         """)
+
+    
+    st.subheader("Decision Tree Results Analysis")
+
+    # Dropdown to select which tree result to view
+    tree_options = [
+        "Decision Tree (max_depth=4)",
+        "Decision Tree (max_depth=3)",
+        "Decision Tree (min_samples_leaf=10)"
+    ]
+    selected_tree = st.selectbox("Select a Decision Tree result to view:", tree_options)
+
+    # Image paths (update with correct paths if different)
+    tree_image_paths = {
+        "Decision Tree (max_depth=4)": "dtree_depth4.png",
+        "Decision Tree (max_depth=3)": "dtree_depth3.png",
+        "Decision Tree (min_samples_leaf=10)": "dtree_minleaf10.png"
+    }
+
+    # Explanations corresponding to each tree
+    tree_descriptions = {
+        "Decision Tree (max_depth=4)": """
+    ### Decision Tree (max_depth=4)
+
+    This tree offers an optimal balance between complexity and interpretability.
+
+    - The **root node** is based on `MLLW (ft) ≤ 0.025`, indicating that this feature plays a significant role in predicting Mean Sea Level.
+    - With a **maximum depth of 4**, the tree highlights the most influential decision paths while maintaining readability.
+    - It's ideal for conveying high-level insights and supporting decisions in a transparent and explainable way.
+    """,
+        "Decision Tree (max_depth=3)": """
+    ### Decision Tree (max_depth=3)
+
+    This model is more compact and interpretable.
+
+    - It also starts with `MLLW (ft) ≤ 0.025` at the root, reinforcing the significance of this feature.
+    - The tree only extends to **3 levels deep**, making it easy to visualize and understand.
+    - While it may lose some precision, it excels at summarizing broader patterns within the data.
+    """,
+        "Decision Tree (min_samples_leaf=10)": """
+    ### Decision Tree (min_samples_leaf=10)
+
+    This version of the tree allows for more detailed splits while ensuring **at least 10 samples per leaf node**.
+
+    - The structure is deeper and more nuanced, with increased **granularity** in predictions.
+    - Like the other trees, `MLLW (ft) ≤ 0.025` is the root split, showing consistent importance across models.
+    - This approach balances complexity and performance, offering richer detail at the cost of some interpretability.
+    """
+    }
+
+    # Display image and description in a collapsible section
+    with st.expander(f"{selected_tree} - Visualization and Description"):
+        st.image(tree_image_paths[selected_tree], caption=selected_tree, use_column_width=True)
+        st.markdown(tree_descriptions[selected_tree])
+
+    # Overall interpretation summary
+    with st.expander("Interpretation and Comparison"):
+        st.markdown("""
+    Across all the decision trees we developed, the variable MLLW (ft) consistently emerged as the most influential feature, appearing as the root node in every configuration. The consistent selection of MLLW (ft) underscores its pivotal role in predicting Mean Sea Level (MSL). This finding aligns with domain expectations since the Mean Lower Low Water (MLLW) typically has a strong correlation with overall sea-level patterns, capturing critical low-tide conditions that directly influence overall tidal ranges and mean sea levels.
+
+    When comparing the complexity and interpretability of the different decision trees, clear trade-offs become evident. Trees constrained by a maximum depth (particularly at max_depth=3 and max_depth=4) are notably more compact and easier to interpret. These simpler models offer direct insights into the primary decision-making rules that impact Mean Sea Level predictions. For instance, the tree with max_depth=3 provides immediate clarity on how initial splits (such as thresholds on MLLW (ft) and MTL (ft)) influence the predicted values, making it particularly beneficial for explanatory or educational contexts where stakeholders require concise explanations.
+
+    On the other hand, allowing the tree to grow deeper, as exemplified by the model with min_samples_leaf=10, leads to a more intricate structure that captures finer-grained relationships within the data. Such complexity naturally enhances predictive accuracy by accommodating subtle variations and more specific conditions within the data. However, it simultaneously reduces interpretability due to the increased number of nodes and detailed splits, making it challenging for practitioners or stakeholders to readily understand the underlying decision-making processes without extensive examination. Therefore, this configuration is better suited for predictive scenarios where accuracy takes precedence over explanatory clarity.
+
+    Ultimately, choosing between these configurations depends on the intended use case. If interpretability and ease of communication with stakeholders are paramount, selecting one of the simpler, depth-constrained trees is advisable. Conversely, if the primary goal is achieving maximal predictive accuracy—such as in automated forecasting systems or scenarios demanding high precision—the deeper, less interpretable trees may be justified despite their complexity.
+    """)
+    with st.expander("Train-Test Split Analysis"):
+        st.markdown("""
+        The train-test split involves dividing the dataset into two distinct subsets: a training set and a testing set. In the analysis, two splits were considered, a 70%-30% split and an 80%-20% split. In each case, the dataset was randomly partitioned, ensuring the subsets were completely disjoint—meaning no data points were shared between the training and testing subsets. This strict separation is crucial, as it guarantees the model evaluation is unbiased, providing an accurate reflection of its predictive performance on unseen data.
+
+        Based on the results , the 80%-20% split produced a better predictive performance compared to the 70%-30% split, reflected clearly by a lower Mean Squared Error (MSE) (0.0006 vs. 0.0010) and a higher R-squared (R²) value (0.9903 vs. 0.9827). The improved metrics from the 80%-20% split suggest that having a larger proportion of data available for model training enhances the Decision Tree's ability to accurately capture underlying data patterns and improve predictive accuracy. Thus, these results illustrate how the size and proportions of the training dataset significantly impact a model's effectiveness.
+
+        The importance of maintaining disjoint training and testing sets is emphasized by the reliability of these performance measures. If overlap had occurred—meaning the model was tested on data already used for training—the evaluation would become overly optimistic, inaccurately representing the model's predictive capability. Consequently, the observed accuracy and errors in a non-disjoint split would underestimate true model errors on new, unseen data. Therefore, maintaining separate, disjoint training and testing subsets as demonstrated here ensures that evaluation metrics like MSE and R² genuinely reflect the model's potential performance in practical, real-world scenarios.
+        """)
+
+        st.image("mseandr2com.png", caption="MSE and R-squared Comparison", use_column_width=True)
+
+    st.subheader("Conclusion")
+
+    st.markdown("""
+    From the analysis conducted with Decision Tree regression modeling, the key finding was that the feature **MLLW (ft)** consistently emerged as the most influential predictor for **Mean Sea Level (MSL)**. This result highlighted the strong and consistent relationship between **Mean Lower Low Water** and overall sea-level changes, underscoring its importance in predictive modeling tasks involving sea-level phenomena.
+
+    The modeling results demonstrated clearly that while **more complex decision trees** provided more precise predictions, **simpler, depth-constrained trees** effectively captured essential predictive relationships while remaining **easily interpretable**. Specifically, the tree constrained to a **maximum depth of 4** balanced predictive accuracy and interpretability optimally, making it particularly suitable for practical use.
+
+    Overall, the study reaffirmed that appropriate **selection of model complexity is crucial**—highlighting the value of **simpler models** when interpretability and stakeholder understanding are priorities. Additionally, the research confirmed the necessity of employing **regression-specific metrics** (such as **MSE** and **R²**) for continuous predictions rather than classification metrics like accuracy or confusion matrices, which would have been unsuitable and misleading.
+
+    Thus, **Decision Tree regression** proved effective for clearly identifying critical relationships influencing mean sea-level predictions, with **MLLW (ft)** emerging as a central feature across all modeling approaches.
+    """)
+
+
+
+# Section: Regression
+elif section == "Regression":
+    st.header("Regression Analysis")
+
+    st.subheader("Overview")
+
+    st.markdown("""
+    Regression is a supervised machine learning technique used to predict **continuous numerical values** based on the relationships between dependent and independent variables. In contrast to classification (which predicts categories), regression estimates quantities such as temperature, price, demand, or — in this case — **Mean Sea Level (MSL)**.
+
+    The goal of regression is to learn a mathematical relationship from historical data, enabling the model to predict unknown values as accurately as possible.
+
+    ---
+    When is Regression Used?
+
+    Regression is typically applied when:
+    - The target/output variable is **numeric or continuous**
+    - You want to understand **how features influence** an outcome
+    - The focus is on **trend estimation, forecasting**, or **real-world measurements**
+    - In this project, although i applied classification models by discretizing Mean Sea Level (MSL) into categories, the original target variable was continuous — making it a natural fit for regression analysis.""")
+    st.subheader(" Key Questions: Linear vs. Logistic Regression")
+
+    st.markdown("""
+    **(a) Define and explain linear regression.**  
+    Linear regression is a statistical method used to model the relationship between a dependent variable (continuous outcome) and one or more independent variables by fitting a linear equation. It predicts outcomes by estimating coefficients that minimize the sum of squared errors between observed and predicted values.
+
+    **(b) Define and explain logistic regression.**  
+    Logistic regression is a classification algorithm used to predict categorical outcomes (binary, such as yes/no) based on input variables. It models the probability of an outcome using a logistic (sigmoid) function, ensuring predicted probabilities fall between 0 and 1.
+
+    **(c) How are they similar and how are they different?**  
+    Both methods are regression techniques that estimate relationships between dependent and independent variables, using similar approaches to fitting coefficients (e.g., optimization methods). However, linear regression predicts continuous outcomes and assumes linear relationships, while logistic regression predicts categorical outcomes and estimates probabilities through a nonlinear logistic function.
+
+    **(d) Does logistic regression use the Sigmoid function? Explain.**  
+    Yes, logistic regression uses the Sigmoid function (logistic function) to map any real-valued input into a value between 0 and 1, representing probabilities.
+
+    **(e) Explain how maximum likelihood is connected to logistic regression.**  
+    Logistic regression uses maximum likelihood estimation (MLE) to find the optimal parameters. MLE identifies coefficients that maximize the likelihood (probability) of observing the given data, resulting in parameters that best predict the observed categorical outcomes.
+    """)
+    st.image("regoverview.jpg", caption="Sample Regrssion Image", use_column_width=True)
+    st.image("regoverview1.webp", caption="Sample Regrssion Image", use_column_width=True)
+
+    with st.expander("Data Preparation"):
+        st.markdown("""
+        The initial dataset contained tidal information including measurements such as Highest tide, Mean Higher High Water (MHHW), Mean Sea Level (MSL), and others. However, it also included non-numeric or irrelevant columns such as Date, Time (GMT), and an Inf column which appeared to be an error placeholder or irrelevant flag. These columns were removed to ensure a clean and meaningful feature set for modeling.
+
+        To further prepare the data:
+
+        - All rows containing missing values were dropped to prevent data leakage or bias during training.
+        - The core target variable chosen for prediction was MSL (ft), which is a continuous variable representing Mean Sea Level.
+        - Since Naïve Bayes and other selected models are inherently classification algorithms, this continuous target was discretized into three balanced categories (low, medium, high) using quantile-based binning (qcut). This allowed us to frame the problem as a multi-class classification task.
+        - All remaining numeric features were standardized using StandardScaler. This scaling ensured that features with larger numerical ranges did not dominate the model learning process, particularly important for algorithms like Logistic Regression and Naïve Bayes.
+
+        The resulting dataset was now fully numeric, clean, and suitable for applying and comparing classification models.
+        """)
+
+        st.image("regression_after_cleaning.png", caption="Dataset After Cleaning", use_column_width=True)
+
+        st.markdown("""
+        **Data Splitting Strategies**
+
+        To ensure fair and robust evaluation of the models, we applied two train-test splitting strategies:
+
+        **70/30 Split**:
+        - 70% of the dataset was used for training the models
+        - 30% was held out as a test set to evaluate performance
+        - This split provides more test data for evaluation, but slightly less data for training
+
+        **80/20 Split**:
+        - 80% of the data was used for training
+        - 20% was used for testing
+        - This split gives models more data to learn from, but fewer test samples for evaluation
+
+        To maintain class balance in both splits, stratified sampling was used. This ensured that all classes (low, medium, high MSL) were proportionally represented in both the training and testing sets, preventing bias and skewed evaluation.
+
+        By using two splits, we were able to compare how each model generalizes with different amounts of training data and validate the consistency of their performance across scenarios.
+        """)
+
+        split_images = {
+            "70% Training Data": "split_train_70.png",
+            "30% Test Data": "split_test_30.png",
+            "80% Training Data": "split_train_80.png",
+            "20% Test Data": "split_test_20.png"
+        }
+
+        selected_image = st.selectbox("Select a split to view the corresponding data table:", list(split_images.keys()))
+        st.image(split_images[selected_image], use_column_width=True)
+
+
+    st.subheader("Results Analysis")
+
+    tabs = [
+        "70/30 - Logistic Regression",
+        "70/30 - Decision Tree",
+        "70/30 - Gaussian Naive Bayes",
+        "80/20 - Logistic Regression",
+        "80/20 - Decision Tree",
+        "80/20 - Gaussian Naive Bayes"
+    ]
+
+    selected_tab = st.selectbox("Select a model and split to view results:", tabs)
+
+    image_paths = {
+        "70/30 - Logistic Regression": "logreg_7030.png",
+        "70/30 - Decision Tree": "dtree_7030.png",
+        "70/30 - Gaussian Naive Bayes": "gnb_7030.png",
+        "80/20 - Logistic Regression": "logreg_8020.png",
+        "80/20 - Decision Tree": "dtree_8020.png",
+        "80/20 - Gaussian Naive Bayes": "gnb_8020.png"
+    }
+
+    if selected_tab == "70/30 - Logistic Regression":
+        st.image(image_paths[selected_tab], caption="Logistic Regression (70/30 Split)", use_column_width=True)
+        st.markdown("""
+    **1. Logistic Regression**
+    - **Accuracy:** 93.7%
+    - Class 2 was predicted perfectly (**69/69 correct**), showing excellent class separation.
+    - Some misclassification occurred in Class 0 (**8 samples predicted as Class 1**) and in Class 1 (**2 as Class 0**, **3 as Class 2**).
+    - Overall, a strong performer with reliable prediction, though a bit more confusion around Class 1.
+
+    """)
+
+    elif selected_tab == "70/30 - Decision Tree":
+        st.image(image_paths[selected_tab], caption="Decision Tree (70/30 Split)", use_column_width=True)
+        st.markdown("""
+    **2. Decision Tree**
+    - **Accuracy:** 93.7%
+    - Delivered consistent performance across all three classes.
+    - Class 1 had slightly more misclassifications (**8 in total**) distributed across Class 0 and Class 2.
+    - Slightly better results in Class 0 (**66/69 correct**), indicating effective majority class separation.
+
+    """)
+
+    elif selected_tab == "70/30 - Gaussian Naive Bayes":
+        st.image(image_paths[selected_tab], caption="Gaussian Naive Bayes (70/30 Split)", use_column_width=True)
+        st.markdown("""
+    **3. Gaussian Naive Bayes**
+    - **Accuracy:** 94.2% – **Best accuracy on this split**.
+    - Produced very balanced results across classes with minimal errors.
+    - Key misclassifications occurred from Class 0 to Class 1 (**9 instances**) and 1–2 from other categories.
+    - Overall, it handled all class distributions effectively, making it the most robust model in this case.
+
+    """)
+
+    elif selected_tab == "80/20 - Logistic Regression":
+        st.image(image_paths[selected_tab], caption="Logistic Regression (80/20 Split)", use_column_width=True)
+        st.markdown("""
+    **4. Logistic Regression**
+    - **Accuracy:** 92.7%
+    - Class 2 was well captured with high precision (**45/46 correct**).
+    - Some confusion seen in Class 0 (**4 samples as Class 1**) and Class 1 (**3 as Class 0**, **2 as Class 2**).
+    - Performance remained strong, but slightly reduced consistency compared to the 70/30 split.
+
+    """)
+
+    elif selected_tab == "80/20 - Decision Tree":
+        st.image(image_paths[selected_tab], caption="Decision Tree (80/20 Split)", use_column_width=True)
+        st.markdown("""
+    **5. Decision Tree**
+    - **Accuracy:** 94.2% – **Best in this split**.
+    - Maintained balance across all classes and performed reliably.
+    - Only **4 total misclassifications**, indicating very high predictive strength.
+    - Stable and interpretable with great class sensitivity across the board.
+
+    """)
+
+    elif selected_tab == "80/20 - Gaussian Naive Bayes":
+        st.image(image_paths[selected_tab], caption="Gaussian Naive Bayes (80/20 Split)", use_column_width=True)
+        st.markdown("""
+    **6. Gaussian Naive Bayes**
+    - **Accuracy:** 93.4%
+    - Consistent results similar to previous split, with slight decrease in class precision.
+    - Misclassifications primarily occurred between Class 0 and Class 1.
+    - Still a strong performer but slightly behind Decision Tree for this configuration.
+
+    """)
+
+    st.markdown("---")
+    st.markdown("**Final Takeaway**")
+    st.markdown("""
+    | Model               | Best Split | Overall Consistency                      |
+    |---------------------|------------|-------------------------------------------|
+    | Gaussian Naive Bayes| 70/30      | Best on larger test set, robust           |
+    | Decision Tree       | 80/20      | Strongest overall, stable across splits   |
+    | Logistic Regression | 70/30      | Good, but slightly less precise on Class 1|
+    """)
+    # st.subheader("Conclusion and Model Comparison")
+
+    st.header("Conclusion and Model Comparison")
+
+    st.markdown("""
+    In this project, I investigated the application of three supervised machine learning algorithms—**Logistic Regression**, **Decision Tree Classifier**, and **Gaussian Naïve Bayes**—to predict discretized categories of Mean Sea Level (MSL). The dataset was split into two configurations: **70/30** and **80/20** training-to-testing ratios. Below is a comparative analysis of the models' performance across these splits.
+    """)
+
+    st.subheader("Model Performance Comparison")
+
+    st.markdown("""
+    | **Model**              | **70/30 Split Accuracy** | **80/20 Split Accuracy** |
+    |------------------------|--------------------------|--------------------------|
+    | Logistic Regression    | 93.7%                    | 92.7%                    |
+    | Decision Tree          | 93.7%                    | 94.2%                    |
+    | Gaussian Naïve Bayes   | 94.2%                    | 93.4%                    |
+    """)
+
+    st.subheader("Performance Insights")
+
+    st.markdown("""
+    - **Logistic Regression** demonstrated robust performance but exhibited slight misclassifications, particularly in the middle category of MSL. This sensitivity may be attributed to its reliance on linear decision boundaries, which might not fully capture complex patterns in the data.
+
+    - **Decision Tree Classifier** showed consistent and slightly superior performance, especially in the 80/20 split. Its ability to model non-linear relationships and interactions between features likely contributed to its effectiveness in this context.
+
+    - **Gaussian Naïve Bayes** performed commendably, with the highest accuracy in the 70/30 split. Its assumption of feature independence and the modeling of continuous data as Gaussian distributions allowed it to handle the dataset effectively, though its performance slightly declined in the 80/20 split.
+    """)
+
+    st.subheader("Multinomial Naïve Bayes vs. Logistic Regression")
+
+    st.markdown("""
+    Initially, **Multinomial Naïve Bayes** was considered; however, it is tailored for discrete feature distributions, such as text data represented by word counts. Given that the MSL dataset comprises continuous numerical features, **Gaussian Naïve Bayes** was more appropriate.
+
+    **Logistic Regression**, a discriminative model, directly estimates the posterior probabilities and is effective for binary and multiclass classification tasks. In this project, while Logistic Regression performed well, **Gaussian Naïve Bayes** had a slight edge in the 70/30 split, possibly due to its generative approach modeling the joint distribution of features and labels.
+    """)
+
+    st.subheader("Insights Gained")
+
+    st.markdown("""
+    This analysis highlighted the importance of selecting algorithms that align with the data's characteristics. **Decision Tree Classifiers** and **Gaussian Naïve Bayes** demonstrated strong capabilities in handling the MSL dataset, likely due to their flexibility in modeling complex relationships and distributions.
+
+    **Logistic Regression** also provided valuable insights but may benefit from additional feature engineering or transformation to enhance performance.
+    """)
+
+    st.subheader("Final Thoughts")
+
+    st.markdown("""
+    In conclusion, the choice of algorithm significantly impacts predictive performance. **Decision Trees** and **Gaussian Naïve Bayes** emerged as effective models for this project, underscoring the need for careful consideration of data properties and model assumptions in machine learning tasks.
+    """)
+    with st.expander("Train-Test Splitting Insights and Impact on Model Performance"):
+        st.markdown("""
+        In this project, I implemented two commonly used train-test split strategies: **70/30** and **80/20**, in order to evaluate how model performance changes with different proportions of training and testing data. The **70/30 split** provided more testing samples, giving a broader view of how well the models generalized to unseen data, while the **80/20 split** gave the models more data to learn from, potentially improving their ability to identify underlying patterns. To ensure a fair comparison, both splits were stratified by class to maintain a balanced distribution of the target classes across training and test sets. This was important because the target variable, derived from discretizing the Mean Sea Level (MSL), had three balanced categories. Any imbalance during splitting could have biased the models toward predicting one class more accurately than the others.
+
+        The results clearly reflected the impact of these splitting strategies. For instance, in the **70/30 split**, the **Gaussian Naïve Bayes** model achieved the highest accuracy at **94.2%**, indicating that it effectively captured the underlying distributions with slightly more test data. Logistic Regression and Decision Tree also performed well, each reaching **93.7%**, but Naïve Bayes showed a slight edge in generalization in that setup. In contrast, under the **80/20 split**, the **Decision Tree Classifier** performed best with an accuracy of **94.2%**, outperforming both Logistic Regression (**92.7%**) and Gaussian Naïve Bayes (**93.4%**). This improvement for the Decision Tree suggested that having more training data helped the model build deeper and more accurate decision boundaries. These shifts in performance between splits underscored how the volume of training versus testing data can influence which algorithm performs best.
+
+        Using a **disjoint train-test split** was crucial for ensuring that the evaluation was realistic. The disjoint nature meant that no overlap existed between training and testing sets, forcing the models to make predictions on completely new data rather than memorized examples. This approach provided a more honest assessment of how the models would perform in real-world scenarios. For example, had there been overlap, all models would likely have shown near-perfect accuracy, which would be misleading. Instead, the disjoint split allowed me to see how each algorithm handled true generalization. The variation in results between the two splits also confirmed that model choice can depend on the availability of data, and that a good model should maintain stable performance across different testing conditions.
+        """)
+
 
 
 elif section == "Models Implemented":
