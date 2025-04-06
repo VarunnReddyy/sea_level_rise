@@ -890,25 +890,25 @@ if section == "Naive Bayes":
         st.markdown("""
         Training and testing sets must be disjoint to prevent contamination. If a model is tested on samples it saw during training, it gives inflated performance metrics. Disjoint splits ensure **realistic evaluation**, helping build models that generalize well to unseen data in the real world.
         """)
-        with st.expander("Sample Train-Test Splits (Raw MSL Data)"):
-            selected_table = st.selectbox(
-                "Select a split to view the corresponding data table:",
-                (
-                    "70% Training Data",
-                    "30% Test Data",
-                    "80% Training Data",
-                    "20% Test Data"
-                )
-            )
+        # Add a subheading or markdown label if needed
+        st.markdown("### Sample Train-Test Splits (Raw MSL Data)")
         
-            image_paths = {
-                "70% Training Data": "nb70.png",
-                "30% Test Data": "nb30.png",
-                "80% Training Data": "nb80.png",
-                "20% Test Data": "nb20.png"
-            }
+        # Dropdown selector
+        split_images = {
+            "70% Training Data": "nb70.png",
+            "30% Test Data": "nb30.png",
+            "80% Training Data": "nb80.png",
+            "20% Test Data": "nb20.png"
+        }
         
-            st.image(image_paths[selected_table], caption=selected_table, use_container_width=True)
+        selected_image = st.selectbox(
+            "Select a split to view the corresponding data table:",
+            list(split_images.keys())
+        )
+        
+        # Display corresponding image
+        st.image(split_images[selected_image], caption=selected_image, use_container_width=True)
+
     with st.expander("Link to the dataset"):
         st.markdown("[Click here to view the dataset](https://github.com/VarunnReddyy/sea_level_rise/blob/main/station%201611400dataaset.csv)")    
     with st.expander("Link to NB Notebook"):
@@ -1237,23 +1237,18 @@ elif section == "Decision Tree":
 
         These practices form the foundation of trustworthy model validation and are especially important when deploying predictive models for scientific or policy-related applications like sea-level monitoring.
         """)
-        with st.expander("Sample Train-Test Splits (Raw MSL Data)"):
-            selected_table = st.selectbox(
-                "Select a split to view the corresponding data table:",
-                (
-                    "70% Training Data",
-                    "30% Test Data",
-                    "80% Training Data",
-                    "20% Test Data"
-                )
-            )
+        st.subheader("Sample Train-Test Splits (Raw MSL Data)")
+
+        split_images = {
+            "70% Training Data": "nb70.png",
+            "30% Test Data": "nb30.png",
+            "80% Training Data": "nb80.png",
+            "20% Test Data": "nb20.png"
+        }
         
-            image_paths = {
-                "70% Training Data": "nb70.png",
-                "30% Test Data": "nb30.png",
-                "80% Training Data": "nb80.png",
-                "20% Test Data": "nb20.png"
-            }
+        selected_image = st.selectbox("Select a split to view the corresponding data table:", list(split_images.keys()))
+        st.image(split_images[selected_image], use_column_width=True)
+
     with st.expander("Dataset images"):
             st.image('dataset_image.jpeg', caption="Dataset Before Cleaning")
         
