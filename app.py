@@ -60,7 +60,7 @@ def collapsible_section(title, content):
 
 # Sidebar for Navigation
 st.sidebar.title("Navigation")
-section = st.sidebar.selectbox("Select a Section", ["Introduction", "Data Collection and Cleaning", "Data Visualizations","PCA","Clustering","ARM", "Naive Bayes", "Decision Tree", "Regression","SVM","Ensembe Learning","Conclusion","Final Conclusion"], key="nav")
+section = st.sidebar.selectbox("Select a Section", ["Introduction", "Data Collection and Cleaning", "Data Visualizations","PCA","Clustering","ARM", "Naive Bayes", "Decision Tree", "Regression","SVM","Ensemble Learning","Conclusion","Final Conclusion"], key="nav")
 
 # Title of the web app
 st.title("Data Science Project")
