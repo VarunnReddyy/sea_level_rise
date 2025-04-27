@@ -60,7 +60,7 @@ def collapsible_section(title, content):
 
 # Sidebar for Navigation
 st.sidebar.title("Navigation")
-section = st.sidebar.selectbox("Select a Section", ["Introduction", "Data Collection and Cleaning", "Data Visualizations","PCA","Clustering","ARM", "Naive Bayes", "Decision Tree", "Regression", "Conclusion"], key="nav")
+section = st.sidebar.selectbox("Select a Section", ["Introduction", "Data Collection and Cleaning", "Data Visualizations","PCA","Clustering","ARM", "Naive Bayes", "Decision Tree", "Regression","SVM","Ensembe Learning","Conclusion","Final Conclusion"], key="nav")
 
 # Title of the web app
 st.title("Data Science Project")
@@ -1681,6 +1681,355 @@ elif section == "Models Implemented":
         import seasonal_temporal_analysis
         seasonal_temporal_analysis.display()
 
+
+if section == "SVM":
+    st.title("Support Vector Machines (SVM)")
+
+    st.subheader("Overview of SVM")
+
+    st.markdown("""
+    Support Vector Machines (SVMs) are powerful supervised learning models that aim to find the optimal hyperplane that best separates classes of data with the maximum possible margin. 
+    By default, SVMs act as linear separators, seeking straight-line (or hyperplane) boundaries between classes.
+
+    The concept of the kernel trick enhances SVM’s flexibility: when data is not linearly separable in its original space, a kernel function projects the data into a higher-dimensional space 
+    where a linear separator becomes possible. The dot product is crucial here because SVMs use it to measure the similarity between points; kernels exploit this by computing dot products 
+    in higher dimensions without explicitly transforming the data, making the calculations much faster and more efficient.
+    """)
+
+    st.markdown("Two popular kernels are:")
+
+    st.markdown("- **Polynomial Kernel**: Creates curved decision boundaries using the formula:")
+    st.latex(r"K(x, y) = (x \cdot y + r)^d")
+
+    st.markdown("- **RBF (Radial Basis Function) Kernel**: Forms smooth, localized decision boundaries using:")
+    st.latex(r"K(x, y) = \exp(-\gamma \|x - y\|^2)")
+
+    st.markdown("""
+    To understand how kernels transform data, consider a simple example using a polynomial kernel with parameters \\( r = 1 \\) and \\( d = 2 \\). 
+    Suppose we have a two-dimensional point \\( x = (x_1, x_2) \\); applying the polynomial kernel effectively casts this point into a higher-dimensional space 
+    with features like \\( x_1^2 \\), \\( x_2^2 \\), \\( x_1x_2 \\), and linear terms, allowing SVMs to find a linear separator in this enriched space. 
+    In essence, the original 2D input is expanded into six dimensions, where more complex boundaries become simple linear planes.
+
+    This transformation power, combined with the simplicity of operating through dot products, is what makes SVMs — particularly with kernels — a versatile and powerful tool 
+    for both simple and complex datasets.
+    """)
+
+    # Two Example Images
+    st.image("svm_ex1.png", caption="Example Image 1", use_column_width=True)
+    st.image("svm_ex2.png", caption="Example Image 2", use_column_width=True)
+
+    st.subheader("Train-Test Split Samples")
+
+    with st.expander("70% Train / 30% Test Split"):
+        st.image("svm70.png", caption="Sample of Train Set (70% Split)", use_column_width=True)
+        st.image("svm30.png", caption="Sample of Test Set (30% Split)", use_column_width=True)
+
+    with st.expander("80% Train / 20% Test Split"):
+        st.image("svm80.png", caption="Sample of Train Set (80% Split)", use_column_width=True)
+        st.image("svm20.png", caption="Sample of Test Set (20% Split)", use_column_width=True)
+
+    st.subheader("Train-Test Split Accuracy Comparison")
+    st.image("svm_acc_com.png", caption="Train-Test Split Accuracy Comparison", use_column_width=True)
+
+    with st.expander("Links to Code and Dataset"):
+        st.markdown("""
+        - [Colab Notebook Link](https://colab.research.google.com/drive/14yJE1af98u8J0zBhybMVQ_i2ohGjhhR3?usp=sharing)
+        - [Sea Level Station Dataset](https://github.com/VarunnReddyy/sea_level_rise/blob/main/station%201611400dataaset.csv)
+        """)
+
+    # st.subheader("Summary")
+    # st.markdown("""
+    # Overall, SVMs demonstrated strong performance on this dataset, achieving accuracies of **89%** with a 70/30 split and **88%** with an 80/20 split. 
+    # Despite a slight decrease with less test data, the results confirm the model’s robustness.
+
+    # The kernel trick, particularly using the RBF kernel, allowed the SVM to handle nonlinearly separable patterns, improving overall classification accuracy.
+    
+    # The success of SVM in this project highlights its power in working with moderately sized datasets with clear but possibly nonlinear decision boundaries.
+    # """)
+    # Section: SVM Results
+    st.subheader("Results Analysis")
+
+    # st.markdown("""
+    # ### Dataset Before and After Transformation
+
+    # The original dataset included features such as MHHW, MHW, MSL, MTL, MLW, MLLW, and Lowest tidal levels, all in feet.  
+    # Since Support Vector Machines (SVMs) perform best when features are on a similar scale, the data was **standardized** before training the models. This scaling ensured that features with larger magnitudes did not dominate the decision boundary creation.
+
+    # Here are samples of the train-test splits:
+
+    # """)
+
+    # # Display Train-Test Split Images
+    # with st.expander("Train-Test Split Samples"):
+    #     st.image('file-GcJLRmmbFp13N3x5VtVYs8', caption="Sample of Train Set (70% Split)")
+    #     st.image('file-X11T3hGeZM9TJABzX7wiaU', caption="Sample of Test Set (30% Split)")
+    #     st.image('file-8zCaLVmUheiHwvtpcJCT8R', caption="Sample of Train Set (80% Split)")
+    #     st.image('file-FijPfmjLXrkRHDtYhZ1V1Y', caption="Sample of Test Set (20% Split)")
+    #     st.image('file-RASy7F9jUvE2Mf62K9913u', caption="Accuracy Comparison between 70/30 and 80/20 Splits")
+# --- Data Preparation for SVM Modeling ---
+    with st.expander("Data Preparation: Before and After Transformation"):
+        st.markdown("""
+        ### Dataset Cleaning and Labeling Overview
+
+        The original dataset contained multiple columns, including **Date**, **Time (GMT)**, **Highest**, and various tidal measurements such as **MHHW (ft)**, **MHW (ft)**, **MSL (ft)**, **MTL (ft)**, **MLW (ft)**, **MLLW (ft)**, and **Lowest (ft)**, along with an **Inf** column.  
+        Several columns, particularly **Highest**, **MHW (ft)**, **MTL (ft)**, and **MLW (ft)**, had missing values that could potentially affect the performance of the machine learning model if left untreated.
+
+        To prepare the data for modeling:
+        
+        - I **removed non-numeric and irrelevant columns** like `Time (GMT)` and `Inf`, as they were not useful for analysis.
+        - I handled missing values by applying **mean imputation** to all numeric fields, ensuring a complete and consistent dataset.
+        - I created a **new Label column**: labeling each sample as **"High"** if its `Highest` value exceeded 2.0, and **"Low"** otherwise.
+
+        This transformation:
+        - Reduced the dataset to essential numeric features
+        - Eliminated unnecessary information
+        - Added the target variable required for supervised learning using SVMs.
+
+        These steps made the data structured, reliable, and appropriate for building classification models with different kernels.
+        """)
+
+        st.subheader("Original Dataset (Before Transformation)")
+        st.image('original_data_svm.png', caption="Original Data (First Few Rows)")
+
+        st.subheader("Transformed Dataset (After Cleaning and Labeling)")
+        st.image('transformed_data_svm.png', caption="Transformed Data (First Few Rows)")
+
+    st.markdown("""
+    ---
+    ### Kernels and Costs
+
+    In this project, I explored three different **kernels** with three different **C values** each:
+
+    - **Kernels**: Linear, Polynomial, RBF (Radial Basis Function)
+    - **C values**: 0.1, 1, and 10
+
+    For each kernel and cost combination, a model was trained, and results were compared using confusion matrices and classification reports.
+    """)
+
+    # Display Overall Kernel-Cost Comparison
+    # st.image('svm_acc_com.png', caption="Comparison of Kernels and Costs (Accuracy Bar Chart)", use_column_width=True)
+
+    st.markdown("""
+    ---
+    ### Confusion Matrices for Different Configurations
+
+    Each of the following confusion matrices shows how the SVM models performed under different kernels and cost settings:
+    """)
+
+    # Display Confusion Matrices
+    with st.expander("Confusion Matrices"):
+        st.image('svm_lin_c0.1.png', caption="Linear Kernel, C=0.1")
+        st.image('svm_lin_c1.png', caption="Linear Kernel, C=1")
+        st.image('svm_lin_c10.png', caption="Linear Kernel, C=10")
+        st.image('svm_pol_c0.1.png', caption="Polynomial Kernel, C=0.1")
+        st.image('svm_pol_c1.png', caption="Polynomial Kernel, C=1")
+        st.image('svm_pol_c10.png', caption="Polynomial Kernel, C=10")
+        st.image('svm_rbf_c0.1.png', caption="RBF Kernel, C=0.1")
+        st.image('svm_rbf_c1.png', caption="RBF Kernel, C=1")
+        st.image('svm_rbf_c10.png', caption="RBF Kernel, C=10")
+
+    st.markdown("""
+    ---
+    ### Decision Boundary Visualizations
+
+    To better understand the performance of SVMs with different kernels, I generated visualizations of their decision boundaries using two selected features from the dataset. The plots show how each kernel separates the data in a two-dimensional space after scaling. In the visualization, the linear kernel produced a straight boundary but struggled slightly with more complex regions where the classes overlapped. The polynomial kernel formed a curved but still relatively structured boundary, capturing more subtle patterns compared to the linear model. The RBF kernel created a highly localized and flexible decision boundary, allowing it to better adapt to irregularities and clusters in the data, as seen in the smoother and more dynamic separation in its plot. These visual comparisons highlight how different kernels influence the way SVM models learn to classify non-linearly separable data, with the RBF kernel clearly demonstrating superior adaptability in this case.
+
+    """)
+
+    # Show Decision Boundaries (You can add images here if you have decision boundary plots)
+    st.image('svm_decision_boundary_linear.png', caption="Decision Boundary")
+
+    st.markdown("""
+    ---
+    ### Comparison and Final Discussion
+    The linear kernel performed reasonably well but showed limitations when separating minority class samples, especially at lower cost values (C=0.1 and C=1). It produced simpler decision boundaries, which resulted in higher bias and occasional underfitting. The polynomial kernel showed slightly better results, particularly at higher cost values like C=10, where it managed to capture more minority class examples with fewer classification errors. However, it still struggled with some boundary complexity. In contrast, the RBF kernel demonstrated the strongest performance by forming localized, flexible decision boundaries. With a cost value of C=10, the RBF kernel achieved the most accurate and balanced classification results, outperforming both the linear and polynomial kernels.
+
+    Key Observations:
+    Across all kernels, lower C values generally led to simpler, less flexible decision boundaries, resulting in higher bias and underfitting. Higher C values, especially C=10, allowed the models to create tighter decision boundaries that reduced bias but slightly increased the risk of overfitting. The choice of kernel significantly impacted overall SVM performance; while linear kernels suffice for nearly linearly separable data, non-linear kernels such as polynomial and RBF offered substantial improvements when handling complex, non-linearly separable patterns. Overall, the RBF kernel with a higher cost parameter consistently delivered the best results, highlighting its ability to adapt to intricate data structures.
+        ---
+    """)
+    # # Final Conclusion Section
+    # st.subheader("Final Conclusion: SVM Findings and Learnings")
+
+    # st.markdown("""
+    # Through this, I gained a deep understanding of how Support Vector Machines (SVMs) function, particularly how their performance changes depending on the choice of kernel and cost parameter. SVMs aim to create the best possible boundary between classes by maximizing the margin, and their power lies in their ability to handle both linearly separable and non-linearly separable data using the kernel trick. This study showed that simply applying a linear boundary often fails when data has complex patterns, making the role of kernels essential for achieving higher classification accuracy.
+    # """)
+
+    # st.markdown("""
+    # By applying different kernels — linear, polynomial, and RBF — I was able to directly observe how SVMs adapt to different data distributions. The linear kernel performed reasonably when the data was somewhat separable but struggled to correctly classify minority class examples, particularly at lower cost values. The polynomial kernel, by introducing more flexibility, captured more complex patterns but required careful tuning of cost parameters to avoid overfitting or underfitting. The RBF kernel, however, proved to be the most effective, forming smooth, localized decision boundaries that significantly improved model performance on non-linearly distributed data.
+    # """)
+
+    # st.markdown("""
+    # An important lesson from the experiments was the effect of the cost parameter (C) on model behavior. Lower values of C resulted in simpler, more generalized boundaries with higher bias, often missing finer patterns in the data. Higher C values created tighter, more complex decision boundaries, which helped reduce bias but slightly increased variance. Finding the right balance was key: while a very high C risks overfitting, moderate increases often led to better overall classification performance. In my findings, using a higher C value of 10 with the RBF kernel provided the best trade-off between bias and variance.
+    # """)
+
+    # st.markdown("""
+    # The visualizations of the decision boundaries further reinforced these conclusions. In the decision boundary plots, the linear kernel showed a simple straight line, unable to perfectly separate overlapping data. The polynomial kernel introduced curvature into the decision boundary, providing better adaptability. The RBF kernel showed the greatest flexibility, dynamically wrapping around clusters of points, resulting in a visibly better separation of classes. These plots not only provided evidence of model behavior but also highlighted the importance of kernel selection when working with complex datasets.
+    # """)
+
+    # st.markdown("""
+    # Overall, this project demonstrated that kernel selection and hyperparameter tuning are critical to maximizing the performance of SVM models. It became clear that the RBF kernel is a strong choice when working with real-world data that is rarely perfectly linearly separable. Predictive performance greatly depends on understanding the underlying data distribution and carefully applying machine learning principles. In future applications, I would explore automated methods like grid search to find optimal parameters and extend the approach to multi-class problems. The learnings from this project provide a strong foundation for applying SVMs effectively in more advanced machine learning tasks.
+    # """)
+
+    # # Show Final Images
+    # st.image("svm_best.png", caption="Decision Region: Best RBF Model (C=10)", use_column_width=True)
+    # st.image("svm_cfbest.png", caption="Confusion Matrix: RBF Kernel (C=10)", use_column_width=True)
+if section == "Ensemble Learning":
+    st.title("Ensemble Learning")
+
+    st.subheader("Overview of Ensemble Learning")
+
+    st.markdown("""
+    Ensemble learning is a machine learning technique that combines multiple models, often called "weak learners," to create a more powerful predictive model. 
+    Instead of relying on a single model, ensemble methods merge the strengths of several models to improve overall performance, stability, and accuracy. 
+    The key idea behind ensemble learning is that a group of models working together can correct each other's mistakes, leading to better generalization and more reliable predictions.
+
+    There are several types of ensemble techniques, such as:
+    - **Bagging** (Bootstrap Aggregating)
+    - **Boosting** (e.g., AdaBoost, Gradient Boosting, XGBoost)
+    - **Stacking** (Stacked Generalization)
+    - **Voting** (Hard and Soft Voting Classifiers)
+
+    Some well-known ensemble methods include Random Forest, AdaBoost, XGBoost, and various stacking or voting classifiers.
+    """)
+
+    # Insert your ensemble learning image here
+    st.image("ensemble_weak_to_strong.png", caption="Ensemble Learning: Combining Weak Learners into a Strong Learner", use_column_width=True)
+
+    st.subheader("Why Random Forest?")
+
+    st.markdown("""
+    For this project, I chose to apply the **Random Forest** algorithm among the many available ensemble techniques.
+
+    - Random Forest is a popular bagging method that builds multiple decision trees on different subsets of the data 
+    and then combines their outputs through **majority voting** to make the final prediction.
+    - I selected Random Forest because:
+      - It is highly effective for both classification and regression tasks.
+      - It handles missing values reasonably well.
+      - It is less prone to overfitting compared to a single decision tree.
+      - It provides valuable insights such as **feature importance**.
+    - Given that my dataset involves predicting tidal conditions ("High" or "Low") based on several numeric measurements, 
+    Random Forest was a suitable choice due to its robustness, ability to capture non-linear relationships, 
+    and consistent performance across varying train-test splits.
+    """)
+    with st.expander("Links to Code and Dataset"):
+        st.markdown("""
+        - [Colab Notebook Link](https://colab.research.google.com/drive/1c6tK1yb7UEFdVVFoQqTiPYHjMD1GwLPK?usp=sharing)
+        - [Sea Level Station Dataset](https://github.com/VarunnReddyy/sea_level_rise/blob/main/station%201611400dataaset.csv)
+        """)
+        st.subheader("How Ensemble Learning Applies to This Project")
+
+    st.markdown("""
+    In this project, ensemble learning is applied by implementing the **Random Forest** algorithm to classify tidal conditions into "High" or "Low" categories based on various oceanographic features. 
+    Random Forest operates by creating an ensemble of decision trees, each trained on different random subsets of the data and features. 
+    By combining the predictions of multiple trees through a majority voting mechanism, Random Forest reduces the risk of overfitting and provides greater model stability compared to using a single decision tree. 
+    This bagging approach ensures that the final model benefits from a diverse set of learners, capturing complex patterns in the data that an individual tree might miss.
+    """)
+
+    st.markdown("""
+    To apply this method effectively:
+    - I first prepared the dataset by removing non-informative columns.
+    - I handled missing values using **mean substitution**.
+    - I created a **new target label** based on the Highest tidal measurement.
+    
+    Random Forest was selected because:
+    - It is robust in handling real-world data.
+    - It can work with both categorical and numerical variables.
+    - It has natural resistance to noise and outliers.
+    - It provides feature importance evaluation, allowing model interpretability.
+    """)
+
+    st.markdown("""
+    After training Random Forest models on two different train-test splits (**70%-30%** and **80%-20%**), the results demonstrated strong and consistent performance:
+    - **Accuracy**: 94% with 70-30 split and 95% with 80-20 split.
+    - **Confusion matrices** confirmed the model's effectiveness, with high true positive and true negative rates and very few misclassifications.
+    - **Feature importance analysis** revealed the most influential variables for predicting tidal conditions.
+    """)
+
+    st.markdown("""
+    Overall, using ensemble learning through Random Forest significantly improved the reliability and interpretability of the predictive model. 
+    It allowed me to build a highly accurate and generalizable solution that can robustly classify tidal events based on environmental measurements, 
+    demonstrating the strength of ensemble methods in practical, real-world machine learning applications.
+    """)
+
+    st.subheader("Results and Comparisons")
+
+    with st.expander("Confusion Matrices for Train-Test Splits"):
+        st.image("cf(en)_7030.png", caption="Confusion Matrix - 70% Train / 30% Test Split")
+        st.image("cf(en)_8020.png", caption="Confusion Matrix - 80% Train / 20% Test Split")
+
+    with st.expander("Random Forest Accuracy Comparison"):
+        st.image("en_comp_acc.png", caption="Accuracy Comparison: 70-30 vs 80-20 Splits")
+
+    st.subheader("Feature Importance Analysis")
+
+    with st.expander("Feature Importance for Different Splits"):
+        st.image("fi_en_7030.png", caption="Feature Importance: 70-30 Split")
+        st.image("fi_acc_8020.png", caption="Feature Importance: 80-20 Split")
+
+    st.subheader("Dataset Before and After Transformation")
+
+    with st.expander("Data Transformation Process"):
+        st.image("en_original_data.png", caption="Original Dataset (First Few Rows)")
+        st.image("en_transformed_data.png", caption="Transformed Dataset (After Cleaning and Labeling)")
+
+    st.subheader("Samples of Train and Test Sets")
+
+    with st.expander("Train-Test Split Samples"):
+        st.image("en_train_features.png", caption="Sample of Train Set Features")
+        st.image("en_train_labels.png", caption="Sample of Train Set Labels")
+        st.image("en_test_features.png", caption="Sample of Test Set Features")
+
+    st.subheader("Select a Visualization and Read About It")
+
+    visualization = st.selectbox(
+        "Choose a Random Forest Visualization to Learn More",
+        ("Confusion Matrix (70-30 Split)", 
+         "Confusion Matrix (80-20 Split)",
+         "Accuracy Comparison",
+         "Feature Importance (70-30 Split)",
+         "Feature Importance (80-20 Split)")
+    )
+
+    if visualization == "Confusion Matrix (70-30 Split)":
+        st.image("cf(en)_7030.png", caption="Confusion Matrix - 70% Train / 30% Test Split")
+        st.markdown("""
+        This confusion matrix shows that the Random Forest classifier correctly identified most "High" and "Low" tidal conditions with very few misclassifications. 
+        Only 7 high tides were misclassified as low tides, and 8 low tides were misclassified as high tides.
+        The overall accuracy from this split was 94%, demonstrating strong predictive power even with less training data.
+        """)
+
+    elif visualization == "Confusion Matrix (80-20 Split)":
+        st.image("cf(en)_8020.png", caption="Confusion Matrix - 80% Train / 20% Test Split")
+        st.markdown("""
+        The confusion matrix for the 80-20 split shows even better performance, with only 3 high tides and 6 low tides misclassified.
+        The Random Forest model achieved 95% accuracy, improving slightly compared to the 70-30 split.
+        This confirms that providing more training data leads to better model generalization.
+        """)
+
+    elif visualization == "Accuracy Comparison":
+        st.image("en_comp_acc.png", caption="Accuracy Comparison: 70-30 vs 80-20 Splits")
+        st.markdown("""
+        This bar chart compares the model's accuracy on two different data splits. 
+        The slight increase in accuracy when more data is used for training illustrates how ensemble models like Random Forest benefit from larger datasets.
+        Both splits performed impressively, showing Random Forest's consistency.
+        """)
+
+    elif visualization == "Feature Importance (70-30 Split)":
+        st.image("fi_en_7030.png", caption="Feature Importance: 70-30 Split")
+        st.markdown("""
+        In the 70-30 split, MHHW (ft) was identified as the most critical feature for predicting tidal conditions. 
+        Other important features included MSL (ft), MLLW (ft), and MHW (ft). 
+        Understanding feature importance helps in interpreting the model and possibly optimizing future measurements.
+        """)
+
+    elif visualization == "Feature Importance (80-20 Split)":
+        st.image("fi_acc_8020.png", caption="Feature Importance: 80-20 Split")
+        st.markdown("""
+        For the 80-20 split, the same trend was observed: MHHW (ft) dominated as the most significant predictor.
+        The overall spread of importance was slightly different, suggesting that Random Forest adapts slightly depending on the training data.
+        Feature importance analysis ensures transparency and trust in model predictions.
+        """)
 elif section == "Conclusion":
     st.title("Conclusion")
 
@@ -1791,7 +2140,31 @@ elif section == "Conclusion":
 
         Thank you for exploring this project. Together, we can build a better, more resilient world.
         """)
+elif section == "Final Conclusion":
+    st.header("Final Conclusion: Bridging Machine Learning and Sea level Predictions")
 
+    st.markdown("""
+    In today's world, understanding and predicting changes in the environment is becoming more important than ever. Through this website, we explored how different machine learning models can help us make sense of sea-level data and other coastal measurements. The goal was not just to predict numbers but to build meaningful insights that could be used for real-world decisions. Machine learning acts as a bridge, turning complex patterns in ocean data into easy-to-understand trends that can be acted upon.
+    """)
 
+    st.image("con_cos.png", caption="Machine Learning for Coastal Sea Level Prediction", use_column_width=True)
+
+    st.markdown("""
+    The first image displayed on the website perfectly captures the relationship between ocean warming, machine learning models, and coastal sea levels. It shows how changes in water temperatures at different ocean depths can feed into machine learning algorithms to better predict coastal conditions. This diagram makes it easier to visualize how interconnected our oceans are and how small changes deep underwater can eventually affect the land we live on. It highlights how technology can be a powerful tool in tackling climate-related challenges.
+    """)
+
+    st.markdown("""
+    As we move forward, the second image introduces the various ways coastal data can directly influence important areas like infrastructure, disaster planning, and ecosystem health. The diagram breaks down how predicting coastal erosion and sea-level rise can inform better design and policy decisions. It is a simple yet powerful reminder that data-driven insights can create real benefits for communities, governments, and industries. By using such predictive models, we are better equipped to protect both our environment and our way of life.
+    """)
+
+    st.image("con_flow_chart.png", caption="Applications of Coastal Data Predictions", use_column_width=True)
+
+    st.markdown("""
+    Throughout the website, one of the main lessons was the importance of preparing clean and meaningful data before using any machine learning technique. Just like building a strong foundation is necessary before constructing a house, organizing the data ensures that the models can perform accurately and fairly. When models are trained properly, even basic algorithms like decision trees or ensemble methods like Random Forests can become powerful decision-making tools. In this project, it became very clear that careful preparation is just as important as the modeling itself.
+    """)
+
+    st.markdown("""
+    Overall, this project showed that while machine learning and data science might sound very technical, their real-world impact is very human. From predicting how our coastlines might change to supporting better disaster response plans, these technologies offer hope and solutions. The visuals shared on the site help make these connections clear even for non-technical audiences. By making machine learning more accessible and focusing on its benefits, we can ensure that more people understand its potential and support efforts to use it responsibly for a better future.
+    """)
 
     # You can also include team roles or contribution
